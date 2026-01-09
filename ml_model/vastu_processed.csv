@@ -1,0 +1,101 @@
+layout_id,source_pdf,plot_size_orientation,floor_number,room_name,room_zone,adjacent_rooms,shared_walls,vastu_score,plot_width,plot_height,plot_area,orientation,floor_num,room_type,zone_encoded,orientation_encoded,room_type_encoded,adjacent_count,shared_walls_count
+VASTU_001DEVTA-MARKING,https://www.scribd.com/document/583698234/LAYOUT-PLAN-WITH-VASTU_001DEVTA-MARKING,30x40 East,0Room,BrahmasthanKitchen,SW,Bathroom,Bedroom,75,30.0,40.0,1200.0,East,0,BrahmasthanKitchen,5,2,9,1,1
+VASTU_002Design-and-Plans-PDF,https://www.scribd.com/presentation/250817942/Vastu,35x45 West,1Kitchen,BedroomKitchen,SE,Dining Room,Dining Room,85,35.0,45.0,1575.0,West,1,BedroomKitchen,3,6,10,1,1
+VASTU_003Layout-Plan,https://www.scribd.com/document/583698235/LAYOUT-PLAN-VASTU_003,40x50 North,0Bedroom,Living,NW,Bedroom,Bedroom,90,40.0,50.0,2000.0,North,0,Living,7,0,3,1,1
+VASTU_004Modern-House,https://www.scribd.com/document/583698236/LAYOUT-PLAN-VASTU_004,25x35 South,1Bedroom,"Bathroom,Living",SW,"BrahmasthanKitchen,BedroomKitchen",Dining Room,80,25.0,35.0,875.0,South,1,Bathroom,5,4,4,2,1
+VASTU_005Traditional-Home,https://www.scribd.com/document/583698237/LAYOUT-PLAN-VASTU_005,30x40 East,1Bathroom,Room,SE,Dining Room,Bedroom,88,30.0,40.0,1200.0,East,1,Room,3,2,11,1,1
+VASTU_006Apartment-Design,https://www.scribd.com/document/583698238/LAYOUT-PLAN-VASTU_006,35x45 West,1Room,Dining,NW,Bedroom,Dining Room,82,35.0,45.0,1575.0,West,1,Dining,7,6,5,1,1
+VASTU_007Villa-Plan,https://www.scribd.com/document/583698239/LAYOUT-PLAN-VASTU_007,40x50 North,0Room,Bedroom,SW,Bathroom,Bedroom,92,40.0,50.0,2000.0,North,0,Bedroom,5,0,2,1,1
+VASTU_008Duplex-House,https://www.scribd.com/document/583698240/LAYOUT-PLAN-VASTU_008,25x35 South,1Kitchen,BrahmasthanKitchen,SE,Dining Room,Bedroom,78,25.0,35.0,875.0,South,1,BrahmasthanKitchen,3,4,9,1,1
+VASTU_009Bungalow-Design,https://www.scribd.com/document/583698241/LAYOUT-PLAN-VASTU_009,30x40 East,1Bedroom,BedroomKitchen,NW,Bedroom,Dining Room,86,30.0,40.0,1200.0,East,1,BedroomKitchen,7,2,10,1,1
+VASTU_010Penthouse-Plan,https://www.scribd.com/document/583698242/LAYOUT-PLAN-VASTU_010,35x45 West,1Bathroom,Living,SW,"BrahmasthanKitchen,BedroomKitchen",Bedroom,94,35.0,45.0,1575.0,West,1,Living,5,6,3,2,1
+VASTU_011Sample-Layout,https://www.scribd.com/document/583698251/LAYOUT-PLAN-VASTU_011,28x62 Northwest,1Kitchen,Bedroom,NE,Living Room,Living Room,66,28.0,62.0,1736.0,Northwest,1,Bedroom,1,7,2,1,1
+VASTU_012Sample-Layout,https://www.scribd.com/document/583698252/LAYOUT-PLAN-VASTU_012,40x68 Northeast,1Bathroom,Study,W,Bathroom,Kitchen,79,40.0,68.0,2720.0,Northeast,1,Study,6,1,6,1,1
+VASTU_013Sample-Layout,https://www.scribd.com/document/583698253/LAYOUT-PLAN-VASTU_013,36x37 Northeast,1Bathroom,Bathroom,NW,Bathroom,Dining Room,79,36.0,37.0,1332.0,Northeast,1,Bathroom,7,1,4,1,1
+VASTU_014Sample-Layout,https://www.scribd.com/document/583698254/LAYOUT-PLAN-VASTU_014,30x40 West,1Room,Bedroom,NE,Bathroom,Living Room,93,30.0,40.0,1200.0,West,1,Bedroom,1,6,2,1,1
+VASTU_015Sample-Layout,https://www.scribd.com/document/583698255/LAYOUT-PLAN-VASTU_015,41x48 West,1Bedroom,Study,SE,Bedroom,Kitchen,94,41.0,48.0,1968.0,West,1,Study,3,6,6,1,1
+VASTU_016Sample-Layout,https://www.scribd.com/document/583698256/LAYOUT-PLAN-VASTU_016,24x35 Southwest,2Room,Living,W,Living Room,Kitchen,63,24.0,35.0,840.0,Southwest,2,Living,6,5,3,1,1
+VASTU_017Sample-Layout,https://www.scribd.com/document/583698257/LAYOUT-PLAN-VASTU_017,33x31 East,0Room,Kitchen,NW,Bathroom,Living Room,64,33.0,31.0,1023.0,East,0,Kitchen,7,2,1,1,1
+VASTU_018Sample-Layout,https://www.scribd.com/document/583698258/LAYOUT-PLAN-VASTU_018,53x52 Northwest,0Room,Study,SE,Bathroom,Bedroom,92,53.0,52.0,2756.0,Northwest,0,Study,3,7,6,1,1
+VASTU_019Sample-Layout,https://www.scribd.com/document/583698259/LAYOUT-PLAN-VASTU_019,24x53 Southwest,2Room,Master Bedroom,S,Bedroom,Dining Room,75,24.0,53.0,1272.0,Southwest,2,Master Bedroom,4,5,7,1,1
+VASTU_020Sample-Layout,https://www.scribd.com/document/583698260/LAYOUT-PLAN-VASTU_020,56x44 Southwest,0Room,Study,SE,Dining Room,Dining Room,79,56.0,44.0,2464.0,Southwest,0,Study,3,5,6,1,1
+VASTU_021Sample-Layout,https://www.scribd.com/document/583698261/LAYOUT-PLAN-VASTU_021,33x62 Southeast,2Room,Living,E,Bedroom,Kitchen,97,33.0,62.0,2046.0,Southeast,2,Living,2,3,3,1,1
+VASTU_022Sample-Layout,https://www.scribd.com/document/583698262/LAYOUT-PLAN-VASTU_022,40x50 Southwest,1Room,Guest Room,N,Dining Room,Kitchen,85,40.0,50.0,2000.0,Southwest,1,Guest Room,0,5,8,1,1
+VASTU_023Sample-Layout,https://www.scribd.com/document/583698263/LAYOUT-PLAN-VASTU_023,31x26 West,0Room,Bedroom,NW,Bedroom,Dining Room,95,31.0,26.0,806.0,West,0,Bedroom,7,6,2,1,1
+VASTU_024Sample-Layout,https://www.scribd.com/document/583698264/LAYOUT-PLAN-VASTU_024,55x58 East,1Kitchen,Living,NW,Dining Room,Bedroom,70,55.0,58.0,3190.0,East,1,Living,7,2,3,1,1
+VASTU_025Sample-Layout,https://www.scribd.com/document/583698265/LAYOUT-PLAN-VASTU_025,28x53 Southeast,0Room,Kitchen,S,Bathroom,Dining Room,74,28.0,53.0,1484.0,Southeast,0,Kitchen,4,3,1,1,1
+VASTU_026Sample-Layout,https://www.scribd.com/document/583698266/LAYOUT-PLAN-VASTU_026,36x61 South,1Bathroom,Master Bedroom,S,Bathroom,Bedroom,98,36.0,61.0,2196.0,South,1,Master Bedroom,4,4,7,1,1
+VASTU_027Sample-Layout,https://www.scribd.com/document/583698267/LAYOUT-PLAN-VASTU_027,22x39 South,1Kitchen,Study,SW,Bathroom,Living Room,90,22.0,39.0,858.0,South,1,Study,5,4,6,1,1
+VASTU_028Sample-Layout,https://www.scribd.com/document/583698268/LAYOUT-PLAN-VASTU_028,36x26 West,1Kitchen,Dining,SW,Bathroom,Dining Room,76,36.0,26.0,936.0,West,1,Dining,5,6,5,1,1
+VASTU_029Sample-Layout,https://www.scribd.com/document/583698269/LAYOUT-PLAN-VASTU_029,40x45 Southeast,1Bathroom,Bathroom,E,Bedroom,Dining Room,94,40.0,45.0,1800.0,Southeast,1,Bathroom,2,3,4,1,1
+VASTU_030Sample-Layout,https://www.scribd.com/document/583698270/LAYOUT-PLAN-VASTU_030,51x67 West,1Kitchen,Living,E,Bathroom,Kitchen,82,51.0,67.0,3417.0,West,1,Living,2,6,3,1,1
+VASTU_031Sample-Layout,https://www.scribd.com/document/583698271/LAYOUT-PLAN-VASTU_031,43x29 Southwest,1Room,Bathroom,SW,Living Room,Dining Room,96,43.0,29.0,1247.0,Southwest,1,Bathroom,5,5,4,1,1
+VASTU_032Sample-Layout,https://www.scribd.com/document/583698272/LAYOUT-PLAN-VASTU_032,52x64 North,1Bathroom,Living,NE,Bathroom,Dining Room,81,52.0,64.0,3328.0,North,1,Living,1,0,3,1,1
+VASTU_033Sample-Layout,https://www.scribd.com/document/583698273/LAYOUT-PLAN-VASTU_033,43x62 Northeast,2Room,Dining,S,Dining Room,Dining Room,79,43.0,62.0,2666.0,Northeast,2,Dining,4,1,5,1,1
+VASTU_034Sample-Layout,https://www.scribd.com/document/583698274/LAYOUT-PLAN-VASTU_034,42x57 South,2Room,Guest Room,N,Dining Room,Dining Room,70,42.0,57.0,2394.0,South,2,Guest Room,0,4,8,1,1
+VASTU_035Sample-Layout,https://www.scribd.com/document/583698275/LAYOUT-PLAN-VASTU_035,30x64 South,1Bedroom,Dining,N,Bathroom,Living Room,63,30.0,64.0,1920.0,South,1,Dining,0,4,5,1,1
+VASTU_036Sample-Layout,https://www.scribd.com/document/583698276/LAYOUT-PLAN-VASTU_036,32x48 East,1Room,Bedroom,NE,Bathroom,Bedroom,79,32.0,48.0,1536.0,East,1,Bedroom,1,2,2,1,1
+VASTU_037Sample-Layout,https://www.scribd.com/document/583698277/LAYOUT-PLAN-VASTU_037,34x47 Southwest,0Room,Master Bedroom,W,Dining Room,Living Room,98,34.0,47.0,1598.0,Southwest,0,Master Bedroom,6,5,7,1,1
+VASTU_038Sample-Layout,https://www.scribd.com/document/583698278/LAYOUT-PLAN-VASTU_038,58x38 Southeast,2Room,Bedroom,SE,Dining Room,Bedroom,81,58.0,38.0,2204.0,Southeast,2,Bedroom,3,3,2,1,1
+VASTU_039Sample-Layout,https://www.scribd.com/document/583698279/LAYOUT-PLAN-VASTU_039,26x58 North,2Room,Kitchen,E,Bathroom,Kitchen,86,26.0,58.0,1508.0,North,2,Kitchen,2,0,1,1,1
+VASTU_040Sample-Layout,https://www.scribd.com/document/583698280/LAYOUT-PLAN-VASTU_040,21x57 North,0Room,Study,NE,Living Room,Kitchen,83,21.0,57.0,1197.0,North,0,Study,1,0,6,1,1
+VASTU_041Sample-Layout,https://www.scribd.com/document/583698281/LAYOUT-PLAN-VASTU_041,30x29 South,2Room,Master Bedroom,NW,Bedroom,Dining Room,85,30.0,29.0,870.0,South,2,Master Bedroom,7,4,7,1,1
+VASTU_042Sample-Layout,https://www.scribd.com/document/583698282/LAYOUT-PLAN-VASTU_042,31x50 Southeast,2Room,Study,SE,Bathroom,Kitchen,72,31.0,50.0,1550.0,Southeast,2,Study,3,3,6,1,1
+VASTU_043Sample-Layout,https://www.scribd.com/document/583698283/LAYOUT-PLAN-VASTU_043,50x64 Northwest,1Room,Study,W,Bathroom,Bedroom,73,50.0,64.0,3200.0,Northwest,1,Study,6,7,6,1,1
+VASTU_044Sample-Layout,https://www.scribd.com/document/583698284/LAYOUT-PLAN-VASTU_044,38x30 Northeast,1Kitchen,Guest Room,W,Bedroom,Living Room,84,38.0,30.0,1140.0,Northeast,1,Guest Room,6,1,8,1,1
+VASTU_045Sample-Layout,https://www.scribd.com/document/583698285/LAYOUT-PLAN-VASTU_045,26x46 Southeast,1Kitchen,Kitchen,SW,Dining Room,Bedroom,84,26.0,46.0,1196.0,Southeast,1,Kitchen,5,3,1,1,1
+VASTU_046Sample-Layout,https://www.scribd.com/document/583698286/LAYOUT-PLAN-VASTU_046,54x48 Southeast,1Room,Guest Room,NE,Dining Room,Dining Room,88,54.0,48.0,2592.0,Southeast,1,Guest Room,1,3,8,1,1
+VASTU_047Sample-Layout,https://www.scribd.com/document/583698287/LAYOUT-PLAN-VASTU_047,22x35 West,2Room,Master Bedroom,W,Dining Room,Bedroom,66,22.0,35.0,770.0,West,2,Master Bedroom,6,6,7,1,1
+VASTU_048Sample-Layout,https://www.scribd.com/document/583698288/LAYOUT-PLAN-VASTU_048,25x26 East,1Bathroom,Dining,E,Dining Room,Living Room,60,25.0,26.0,650.0,East,1,Dining,2,2,5,1,1
+VASTU_049Sample-Layout,https://www.scribd.com/document/583698289/LAYOUT-PLAN-VASTU_049,50x61 East,2Room,Study,NE,Dining Room,Dining Room,62,50.0,61.0,3050.0,East,2,Study,1,2,6,1,1
+VASTU_050Sample-Layout,https://www.scribd.com/document/583698290/LAYOUT-PLAN-VASTU_050,45x35 West,1Bedroom,Bathroom,S,Bathroom,Dining Room,80,45.0,35.0,1575.0,West,1,Bathroom,4,6,4,1,1
+VASTU_051Sample-Layout,https://www.scribd.com/document/583698291/LAYOUT-PLAN-VASTU_051,29x57 South,1Room,Bathroom,E,Living Room,Bedroom,80,29.0,57.0,1653.0,South,1,Bathroom,2,4,4,1,1
+VASTU_052Sample-Layout,https://www.scribd.com/document/583698292/LAYOUT-PLAN-VASTU_052,35x49 Southwest,1Kitchen,Guest Room,NE,Bathroom,Dining Room,74,35.0,49.0,1715.0,Southwest,1,Guest Room,1,5,8,1,1
+VASTU_053Sample-Layout,https://www.scribd.com/document/583698293/LAYOUT-PLAN-VASTU_053,50x58 West,1Bathroom,Dining,NW,Bathroom,Dining Room,91,50.0,58.0,2900.0,West,1,Dining,7,6,5,1,1
+VASTU_054Sample-Layout,https://www.scribd.com/document/583698294/LAYOUT-PLAN-VASTU_054,20x26 South,2Room,Kitchen,S,Living Room,Living Room,73,20.0,26.0,520.0,South,2,Kitchen,4,4,1,1,1
+VASTU_055Sample-Layout,https://www.scribd.com/document/583698295/LAYOUT-PLAN-VASTU_055,20x66 Southwest,0Room,Kitchen,W,Bedroom,Kitchen,72,20.0,66.0,1320.0,Southwest,0,Kitchen,6,5,1,1,1
+VASTU_056Sample-Layout,https://www.scribd.com/document/583698296/LAYOUT-PLAN-VASTU_056,50x53 West,1Room,Living,SE,Bathroom,Dining Room,67,50.0,53.0,2650.0,West,1,Living,3,6,3,1,1
+VASTU_057Sample-Layout,https://www.scribd.com/document/583698297/LAYOUT-PLAN-VASTU_057,23x54 Northeast,1Bathroom,Living,SW,Dining Room,Kitchen,67,23.0,54.0,1242.0,Northeast,1,Living,5,1,3,1,1
+VASTU_058Sample-Layout,https://www.scribd.com/document/583698298/LAYOUT-PLAN-VASTU_058,52x66 Southwest,0Room,Study,S,Bathroom,Living Room,99,52.0,66.0,3432.0,Southwest,0,Study,4,5,6,1,1
+VASTU_059Sample-Layout,https://www.scribd.com/document/583698299/LAYOUT-PLAN-VASTU_059,27x65 East,2Room,Master Bedroom,W,Dining Room,Living Room,69,27.0,65.0,1755.0,East,2,Master Bedroom,6,2,7,1,1
+VASTU_060Sample-Layout,https://www.scribd.com/document/583698300/LAYOUT-PLAN-VASTU_060,29x56 Southwest,1Bedroom,Master Bedroom,W,Bedroom,Kitchen,71,29.0,56.0,1624.0,Southwest,1,Master Bedroom,6,5,7,1,1
+VASTU_061Sample-Layout,https://www.scribd.com/document/583698301/LAYOUT-PLAN-VASTU_061,39x62 West,0Room,Study,W,Bedroom,Kitchen,94,39.0,62.0,2418.0,West,0,Study,6,6,6,1,1
+VASTU_062Sample-Layout,https://www.scribd.com/document/583698302/LAYOUT-PLAN-VASTU_062,57x58 North,1Bathroom,Living,NW,Dining Room,Dining Room,70,57.0,58.0,3306.0,North,1,Living,7,0,3,1,1
+VASTU_063Sample-Layout,https://www.scribd.com/document/583698303/LAYOUT-PLAN-VASTU_063,36x66 Northwest,0Room,Bathroom,N,Living Room,Bedroom,96,36.0,66.0,2376.0,Northwest,0,Bathroom,0,7,4,1,1
+VASTU_064Sample-Layout,https://www.scribd.com/document/583698304/LAYOUT-PLAN-VASTU_064,57x25 Southwest,0Room,Dining,NE,Dining Room,Living Room,94,57.0,25.0,1425.0,Southwest,0,Dining,1,5,5,1,1
+VASTU_065Sample-Layout,https://www.scribd.com/document/583698305/LAYOUT-PLAN-VASTU_065,29x50 West,2Room,Living,E,Bathroom,Living Room,77,29.0,50.0,1450.0,West,2,Living,2,6,3,1,1
+VASTU_066Sample-Layout,https://www.scribd.com/document/583698306/LAYOUT-PLAN-VASTU_066,24x47 Northeast,1Kitchen,Kitchen,S,Living Room,Living Room,63,24.0,47.0,1128.0,Northeast,1,Kitchen,4,1,1,1,1
+VASTU_067Sample-Layout,https://www.scribd.com/document/583698307/LAYOUT-PLAN-VASTU_067,41x60 Northeast,0Room,Master Bedroom,N,Bedroom,Bedroom,77,41.0,60.0,2460.0,Northeast,0,Master Bedroom,0,1,7,1,1
+VASTU_068Sample-Layout,https://www.scribd.com/document/583698308/LAYOUT-PLAN-VASTU_068,50x59 Northwest,1Bathroom,Study,SE,Dining Room,Kitchen,78,50.0,59.0,2950.0,Northwest,1,Study,3,7,6,1,1
+VASTU_069Sample-Layout,https://www.scribd.com/document/583698309/LAYOUT-PLAN-VASTU_069,51x27 North,1Bathroom,Kitchen,SW,Dining Room,Bedroom,92,51.0,27.0,1377.0,North,1,Kitchen,5,0,1,1,1
+VASTU_070Sample-Layout,https://www.scribd.com/document/583698310/LAYOUT-PLAN-VASTU_070,26x54 North,1Bedroom,Bedroom,E,Living Room,Kitchen,79,26.0,54.0,1404.0,North,1,Bedroom,2,0,2,1,1
+VASTU_071Sample-Layout,https://www.scribd.com/document/583698311/LAYOUT-PLAN-VASTU_071,30x31 Northwest,1Bathroom,Master Bedroom,S,Bathroom,Bedroom,97,30.0,31.0,930.0,Northwest,1,Master Bedroom,4,7,7,1,1
+VASTU_072Sample-Layout,https://www.scribd.com/document/583698312/LAYOUT-PLAN-VASTU_072,36x61 West,1Bedroom,Living,SW,Dining Room,Kitchen,95,36.0,61.0,2196.0,West,1,Living,5,6,3,1,1
+VASTU_073Sample-Layout,https://www.scribd.com/document/583698313/LAYOUT-PLAN-VASTU_073,54x31 West,0Room,Bedroom,NE,Dining Room,Dining Room,66,54.0,31.0,1674.0,West,0,Bedroom,1,6,2,1,1
+VASTU_074Sample-Layout,https://www.scribd.com/document/583698314/LAYOUT-PLAN-VASTU_074,34x50 North,1Kitchen,Bathroom,NW,Living Room,Kitchen,77,34.0,50.0,1700.0,North,1,Bathroom,7,0,4,1,1
+VASTU_075Sample-Layout,https://www.scribd.com/document/583698315/LAYOUT-PLAN-VASTU_075,46x63 South,2Room,Bedroom,NW,Living Room,Kitchen,66,46.0,63.0,2898.0,South,2,Bedroom,7,4,2,1,1
+VASTU_076Sample-Layout,https://www.scribd.com/document/583698316/LAYOUT-PLAN-VASTU_076,27x40 Northwest,1Bedroom,Guest Room,W,Living Room,Dining Room,67,27.0,40.0,1080.0,Northwest,1,Guest Room,6,7,8,1,1
+VASTU_077Sample-Layout,https://www.scribd.com/document/583698317/LAYOUT-PLAN-VASTU_077,51x53 West,1Kitchen,Master Bedroom,SW,Bedroom,Dining Room,98,51.0,53.0,2703.0,West,1,Master Bedroom,5,6,7,1,1
+VASTU_078Sample-Layout,https://www.scribd.com/document/583698318/LAYOUT-PLAN-VASTU_078,49x53 Northeast,1Bedroom,Study,S,Living Room,Living Room,74,49.0,53.0,2597.0,Northeast,1,Study,4,1,6,1,1
+VASTU_079Sample-Layout,https://www.scribd.com/document/583698319/LAYOUT-PLAN-VASTU_079,29x36 Southwest,1Bathroom,Bedroom,E,Bedroom,Kitchen,77,29.0,36.0,1044.0,Southwest,1,Bedroom,2,5,2,1,1
+VASTU_080Sample-Layout,https://www.scribd.com/document/583698320/LAYOUT-PLAN-VASTU_080,23x65 West,2Room,Bedroom,E,Bedroom,Dining Room,77,23.0,65.0,1495.0,West,2,Bedroom,2,6,2,1,1
+VASTU_081Sample-Layout,https://www.scribd.com/document/583698321/LAYOUT-PLAN-VASTU_081,49x51 East,1Bedroom,Dining,NW,Bedroom,Bedroom,69,49.0,51.0,2499.0,East,1,Dining,7,2,5,1,1
+VASTU_082Sample-Layout,https://www.scribd.com/document/583698322/LAYOUT-PLAN-VASTU_082,23x48 Southwest,1Bedroom,Guest Room,SW,Bedroom,Bedroom,88,23.0,48.0,1104.0,Southwest,1,Guest Room,5,5,8,1,1
+VASTU_083Sample-Layout,https://www.scribd.com/document/583698323/LAYOUT-PLAN-VASTU_083,24x34 Southwest,1Bedroom,Kitchen,E,Bedroom,Dining Room,91,24.0,34.0,816.0,Southwest,1,Kitchen,2,5,1,1,1
+VASTU_084Sample-Layout,https://www.scribd.com/document/583698324/LAYOUT-PLAN-VASTU_084,54x48 West,2Room,Master Bedroom,E,Dining Room,Living Room,76,54.0,48.0,2592.0,West,2,Master Bedroom,2,6,7,1,1
+VASTU_085Sample-Layout,https://www.scribd.com/document/583698325/LAYOUT-PLAN-VASTU_085,51x66 North,1Room,Kitchen,NW,Living Room,Living Room,65,51.0,66.0,3366.0,North,1,Kitchen,7,0,1,1,1
+VASTU_086Sample-Layout,https://www.scribd.com/document/583698326/LAYOUT-PLAN-VASTU_086,35x59 Southwest,1Bathroom,Guest Room,W,Living Room,Kitchen,84,35.0,59.0,2065.0,Southwest,1,Guest Room,6,5,8,1,1
+VASTU_087Sample-Layout,https://www.scribd.com/document/583698327/LAYOUT-PLAN-VASTU_087,20x34 East,1Room,Bathroom,S,Living Room,Bedroom,80,20.0,34.0,680.0,East,1,Bathroom,4,2,4,1,1
+VASTU_088Sample-Layout,https://www.scribd.com/document/583698328/LAYOUT-PLAN-VASTU_088,41x64 South,0Room,Master Bedroom,E,Living Room,Dining Room,70,41.0,64.0,2624.0,South,0,Master Bedroom,2,4,7,1,1
+VASTU_089Sample-Layout,https://www.scribd.com/document/583698329/LAYOUT-PLAN-VASTU_089,51x28 East,1Bedroom,Bathroom,SW,Living Room,Dining Room,80,51.0,28.0,1428.0,East,1,Bathroom,5,2,4,1,1
+VASTU_090Sample-Layout,https://www.scribd.com/document/583698330/LAYOUT-PLAN-VASTU_090,55x57 North,1Kitchen,Bathroom,S,Living Room,Dining Room,80,55.0,57.0,3135.0,North,1,Bathroom,4,0,4,1,1
+VASTU_091Sample-Layout,https://www.scribd.com/document/583698331/LAYOUT-PLAN-VASTU_091,25x69 Northeast,2Room,Bedroom,NE,Bedroom,Dining Room,85,25.0,69.0,1725.0,Northeast,2,Bedroom,1,1,2,1,1
+VASTU_092Sample-Layout,https://www.scribd.com/document/583698332/LAYOUT-PLAN-VASTU_092,43x36 West,0Room,Bedroom,NW,Living Room,Kitchen,60,43.0,36.0,1548.0,West,0,Bedroom,7,6,2,1,1
+VASTU_093Sample-Layout,https://www.scribd.com/document/583698333/LAYOUT-PLAN-VASTU_093,35x36 Northwest,0Room,Dining,E,Bedroom,Kitchen,75,35.0,36.0,1260.0,Northwest,0,Dining,2,7,5,1,1
+VASTU_094Sample-Layout,https://www.scribd.com/document/583698334/LAYOUT-PLAN-VASTU_094,39x35 Northwest,1Room,Kitchen,W,Bedroom,Dining Room,64,39.0,35.0,1365.0,Northwest,1,Kitchen,6,7,1,1,1
+VASTU_095Sample-Layout,https://www.scribd.com/document/583698335/LAYOUT-PLAN-VASTU_095,23x25 Southeast,0Room,Bathroom,S,Dining Room,Kitchen,75,23.0,25.0,575.0,Southeast,0,Bathroom,4,3,4,1,1
+VASTU_096Sample-Layout,https://www.scribd.com/document/583698336/LAYOUT-PLAN-VASTU_096,25x64 East,0Room,Bathroom,E,Bedroom,Living Room,64,25.0,64.0,1600.0,East,0,Bathroom,2,2,4,1,1
+VASTU_097Sample-Layout,https://www.scribd.com/document/583698337/LAYOUT-PLAN-VASTU_097,39x51 Northeast,1Bedroom,Kitchen,NW,Dining Room,Dining Room,94,39.0,51.0,1989.0,Northeast,1,Kitchen,7,1,1,1,1
+VASTU_098Sample-Layout,https://www.scribd.com/document/583698338/LAYOUT-PLAN-VASTU_098,52x33 North,1Bedroom,Dining,N,Bedroom,Living Room,69,52.0,33.0,1716.0,North,1,Dining,0,0,5,1,1
+VASTU_099Sample-Layout,https://www.scribd.com/document/583698339/LAYOUT-PLAN-VASTU_099,36x26 Northwest,1Bathroom,Guest Room,SW,Bedroom,Living Room,74,36.0,26.0,936.0,Northwest,1,Guest Room,5,7,8,1,1
+VASTU_100Sample-Layout,https://www.scribd.com/document/583698340/LAYOUT-PLAN-VASTU_100,34x50 North,1Room,Dining,SW,Dining Room,Dining Room,63,34.0,50.0,1700.0,North,1,Dining,5,0,5,1,1

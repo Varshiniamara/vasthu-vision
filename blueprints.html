@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generated Blueprints - Vastu Vision</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #F4A261;
+            --secondary: #E9C46A;
+            --deep-green: #2A9D8F;
+            --neutral: #2A363B;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #FFF8E7 0%, #FDF6E3 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: var(--neutral);
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            font-size: 1.2rem;
+            color: var(--deep-green);
+        }
+        
+        .loading i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+        
+        .blueprints-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .blueprint-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .blueprint-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        
+        .blueprint-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .blueprint-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--neutral);
+        }
+        
+        .vastu-badge {
+            background: var(--deep-green);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .vastu-badge.high {
+            background: #28a745;
+        }
+        
+        .vastu-badge.medium {
+            background: #ffc107;
+        }
+        
+        .vastu-badge.low {
+            background: #dc3545;
+        }
+        
+        .blueprint-description {
+            color: #666;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .blueprint-image {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .blueprint-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--deep-green);
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #f8f9fa;
+            color: var(--neutral);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-bottom: 2rem;
+        }
+        
+        .back-button:hover {
+            background: var(--deep-green);
+            transform: translateY(-2px);
+        }
+        
+        .plot-info {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .plot-info h3 {
+            color: var(--neutral);
+            margin-bottom: 1rem;
+        }
+        
+        .plot-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .plot-detail {
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .plot-detail-label {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 0.25rem;
+        }
+        
+        .plot-detail-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--neutral);
+        }
+        
+        @media (max-width: 768px) {
+            .blueprints-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="space.html" class="back-button">
+            <i class="fas fa-arrow-left"></i>
+            Back to Space Details
+        </a>
+        
+        <h1>🏗️ Generated Floor Plan Blueprints</h1>
+        <p class="subtitle">Multiple optimized layouts based on your requirements and Vastu principles</p>
+        
+        <div id="plotInfo" class="plot-info" style="display: none;">
+            <h3>📐 Plot Information</h3>
+            <div class="plot-details">
+                <div class="plot-detail">
+                    <div class="plot-detail-label">Plot Area</div>
+                    <div class="plot-detail-value" id="plotArea">--</div>
+                </div>
+                <div class="plot-detail">
+                    <div class="plot-detail-label">Dimensions</div>
+                    <div class="plot-detail-value" id="plotDimensions">--</div>
+                </div>
+                <div class="plot-detail">
+                    <div class="plot-detail-label">Orientation</div>
+                    <div class="plot-detail-value" id="plotOrientation">--</div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="loading" class="loading">
+            <i class="fas fa-spinner"></i>
+            <p>Generating optimized blueprints...</p>
+        </div>
+        
+        <div id="blueprintsGrid" class="blueprints-grid"></div>
+    </div>
+    
+    <script>
+        // Get space data from localStorage
+        const spaceData = JSON.parse(localStorage.getItem('spaceData') || '{}');
+        
+        async function generateBlueprints() {
+            const loading = document.getElementById('loading');
+            const blueprintsGrid = document.getElementById('blueprintsGrid');
+            const plotInfo = document.getElementById('plotInfo');
+            
+            try {
+                console.log('🏗️ Requesting blueprint generation...');
+                
+                // Call blueprint generation backend
+                const response = await fetch('http://localhost:5002/generate_blueprints', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(spaceData)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    console.log('✅ Blueprints generated!', result);
+                    
+                    // Hide loading
+                    loading.style.display = 'none';
+                    
+                    // Show plot info
+                    plotInfo.style.display = 'block';
+                    document.getElementById('plotArea').textContent = result.plot_info.area + ' sq ft';
+                    document.getElementById('plotDimensions').textContent = 
+                        result.plot_info.width + ' x ' + result.plot_info.height + ' ft';
+                    document.getElementById('plotOrientation').textContent = 
+                        result.plot_info.orientation.replace('-', ' ').toUpperCase();
+                    
+                    // Display blueprints
+                    result.blueprints.forEach(blueprint => {
+                        const card = createBlueprintCard(blueprint);
+                        blueprintsGrid.appendChild(card);
+                    });
+                } else {
+                    throw new Error(result.error || 'Blueprint generation failed');
+                }
+                
+            } catch (error) {
+                console.error('Error generating blueprints:', error);
+                loading.innerHTML = `
+                    <i class="fas fa-exclamation-triangle" style="color: #dc3545;"></i>
+                    <p style="color: #dc3545;">Failed to generate blueprints. Please try again.</p>
+                    <button onclick="window.location.href='space.html'" class="btn btn-primary" style="margin-top: 1rem;">
+                        Go Back
+                    </button>
+                `;
+            }
+        }
+        
+        function createBlueprintCard(blueprint) {
+            const card = document.createElement('div');
+            card.className = 'blueprint-card';
+            
+            // Determine badge class
+            let badgeClass = 'medium';
+            if (blueprint.vastu_score >= 85) badgeClass = 'high';
+            else if (blueprint.vastu_score < 70) badgeClass = 'low';
+            
+            card.innerHTML = `
+                <div class="blueprint-header">
+                    <div class="blueprint-title">${blueprint.name}</div>
+                    <div class="vastu-badge ${badgeClass}">
+                        ${blueprint.vastu_score}% Vastu
+                    </div>
+                </div>
+                <div class="blueprint-description">${blueprint.description}</div>
+                <img src="data:image/png;base64,${blueprint.image}" 
+                     alt="${blueprint.name}" 
+                     class="blueprint-image">
+                <div class="blueprint-actions">
+                    <button class="btn btn-primary" onclick="selectBlueprint(${blueprint.id})">
+                        <i class="fas fa-check"></i> Select This Layout
+                    </button>
+                    <button class="btn btn-secondary" onclick="downloadBlueprint(${blueprint.id})">
+                        <i class="fas fa-download"></i> Download
+                    </button>
+                </div>
+            `;
+            
+            return card;
+        }
+        
+        function selectBlueprint(blueprintId) {
+            // Save selected blueprint
+            localStorage.setItem('selectedBlueprint', blueprintId);
+            
+            // Show success message
+            alert(`Blueprint ${blueprintId} selected! Proceeding to analysis...`);
+            
+            // Redirect to results
+            window.location.href = 'results.html';
+        }
+        
+        function downloadBlueprint(blueprintId) {
+            const blueprints = JSON.parse(localStorage.getItem('blueprints') || '[]');
+            const blueprint = blueprints.find(b => b.id === blueprintId);
+            
+            if (blueprint) {
+                // Create download link
+                const link = document.createElement('a');
+                link.href = 'data:image/png;base64,' + blueprint.image;
+                link.download = `vastu-blueprint-${blueprintId}.png`;
+                link.click();
+            }
+        }
+        
+        // Generate blueprints on page load
+        window.onload = generateBlueprints;
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,187 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                    🚀 QUICK UPLOAD GUIDE - 3 STEPS                          ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│  STEP 1: LOGIN TO HOSTINGER FILE MANAGER                                     │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+1. Go to: hostinger.com
+2. Login with your credentials
+3. Click "File Manager"
+4. Navigate to: public_html/
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│  STEP 2: UPLOAD/REPLACE THESE 3 FILES                                        │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+FILE 1: space-script.js
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Action: REPLACE existing file
+Location: public_html/space-script.js
+Why: Updated to auto-trigger ML analysis after saving space
+
+How to:
+  a) Find existing "space-script.js" in File Manager
+  b) Right-click → Delete
+  c) Click "Upload" button
+  d) Select NEW space-script.js from your computer
+  e) Wait for upload to complete
+  ✅ Done!
+
+
+FILE 2: api_get_analysis_results.php
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Action: UPLOAD new file
+Location: public_html/api_get_analysis_results.php
+Why: Fetches analysis results for the results page
+
+How to:
+  a) Click "Upload" button in File Manager
+  b) Select api_get_analysis_results.php from your computer
+  c) Wait for upload to complete
+  ✅ Done!
+
+
+FILE 3: space_save.php
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Action: REPLACE existing file
+Location: public_html/space_save.php
+Why: Updated to return space_id for analysis
+
+How to:
+  a) Find existing "space_save.php" in File Manager
+  b) Right-click → Delete
+  c) Click "Upload" button
+  d) Select UPDATED_space_save.php from your computer
+  e) After upload, right-click → Rename to "space_save.php"
+  ✅ Done!
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│  STEP 3: TEST THE COMPLETE FLOW                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+1. Go to: https://vastology.purlyedit.in/space.php
+   ✅ Should load without 404 error
+
+2. Fill the form:
+   - Plot Size: 1200 sq ft
+   - Room Type: 2 BHK
+   - Rooms:
+     • Living Room → Northeast
+     • Kitchen → Southeast
+     • Bedroom → Southwest
+   - Orientation: North Facing
+   - Floor Number: 1
+
+3. Click "Save Space Details"
+   ✅ Button changes to "Saving..."
+   ✅ Then "Analyzing Vastu..."
+   ✅ Redirects to results page
+
+4. View Results:
+   ✅ See Vastu Score (e.g., 76%)
+   ✅ See 5 Elements Map
+   ✅ See Element Bars
+   ✅ See Recommendations
+
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                           TROUBLESHOOTING                                    ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+PROBLEM: 404 Error on space.php
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FIX:
+  • Make sure file is named "space.php" (not space.html)
+  • Check file exists in public_html/
+  • Clear browser cache (Ctrl+F5)
+
+
+PROBLEM: Button doesn't change to "Analyzing Vastu..."
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FIX:
+  • Make sure space-script.js is the UPDATED version
+  • Press F12 → Check Console for errors
+  • Verify space_save.php returns space_id
+
+
+PROBLEM: Results page shows "Analysis not found"
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FIX:
+  • Check if api_get_analysis_results.php is uploaded
+  • Check if vastu_analysis.php exists
+  • Verify analysis_results table exists in database
+
+
+PROBLEM: JavaScript errors in console
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FIX:
+  • Re-upload space-script.js (might be corrupted)
+  • Check file path in space.php: <script src="space-script.js"></script>
+  • Clear browser cache
+
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                           FILES CHECKLIST                                    ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+After uploading, verify these files exist in public_html/:
+
+  □ space.php (already there)
+  □ space-script.js (UPDATED - just uploaded)
+  □ space-styles.css (already there)
+  □ space_save.php (UPDATED - just uploaded)
+  □ vastu_analysis.php (already there)
+  □ vastu_results.html (already there)
+  □ api_get_analysis_results.php (NEW - just uploaded)
+  □ db_connect.php (already there)
+
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                           WHAT HAPPENS NOW                                   ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+USER FILLS FORM
+    ↓
+SAVES TO DATABASE (space_save.php)
+    ↓
+AUTOMATICALLY ANALYZES (vastu_analysis.php)
+    ↓
+CALCULATES 5 ELEMENTS + VASTU SCORE
+    ↓
+REDIRECTS TO RESULTS PAGE
+    ↓
+SHOWS BEAUTIFUL VISUALIZATION
+    ↓
+USER SEES:
+  • Vastu Score (percentage)
+  • 5 Elements Map (Fire, Water, Earth, Air, Space)
+  • Element Bars (animated)
+  • Recommendations (based on scores)
+  • "Back to Dashboard" button
+
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                           THAT'S IT! 🎉                                      ║
+║                                                                              ║
+║  Just 3 files to upload and you're done!                                    ║
+║  The system will automatically analyze and show results!                    ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                              NEED HELP?
+═══════════════════════════════════════════════════════════════════════════════
+
+If something doesn't work:
+  1. Open browser console (F12)
+  2. Look for red error messages
+  3. Copy the error message
+  4. Tell me the error
+  5. I'll help you fix it immediately!
+
+═══════════════════════════════════════════════════════════════════════════════
+

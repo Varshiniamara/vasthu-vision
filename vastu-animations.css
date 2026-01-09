@@ -1,0 +1,77 @@
+/* Vastu Animation Keyframes */
+@keyframes vastuPulse {
+    0%, 100% {
+        opacity: 0.1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.2;
+        transform: scale(1.05);
+    }
+}
+
+@keyframes vastuFlow {
+    0%, 100% {
+        background-position: 0 0, 60px 60px, 40px 40px, 0 0, 0 0, 0 0, 0 0;
+    }
+    25% {
+        background-position: 30px 30px, 90px 90px, 70px 70px, 50px 50px, 50px 50px, 75px 75px, 75px 75px;
+    }
+    50% {
+        background-position: 60px 60px, 120px 120px, 100px 100px, 100px 100px, 100px 100px, 150px 150px, 150px 150px;
+    }
+    75% {
+        background-position: 90px 90px, 150px 150px, 130px 130px, 150px 150px, 150px 150px, 225px 225px, 225px 225px;
+    }
+}
+
+@keyframes vastuFloat {
+    0%, 100% {
+        transform: translateY(0px) translateX(0px) rotate(0deg);
+        opacity: 0.1;
+    }
+    25% {
+        transform: translateY(-30px) translateX(20px) rotate(90deg);
+        opacity: 0.15;
+    }
+    50% {
+        transform: translateY(-20px) translateX(-10px) rotate(180deg);
+        opacity: 0.2;
+    }
+    75% {
+        transform: translateY(-40px) translateX(15px) rotate(270deg);
+        opacity: 0.15;
+    }
+}
+
+@keyframes vastuRotate {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+@keyframes vastuEnergyFlow {
+    0%, 100% {
+        opacity: 0.1;
+        transform: translateX(0);
+    }
+    50% {
+        opacity: 0.3;
+        transform: translateX(20px);
+    }
+}
+
+@keyframes vastuMandalaRotate {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+
+

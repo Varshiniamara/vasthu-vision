@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📷 Test Image Upload & Analysis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 800px;
+            width: 100%;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2A363B;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        
+        .upload-area {
+            border: 3px dashed #667eea;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #f8f9fa;
+            margin-bottom: 30px;
+        }
+        
+        .upload-area:hover {
+            border-color: #764ba2;
+            background: #e9ecef;
+        }
+        
+        .upload-area.dragover {
+            border-color: #F4A261;
+            background: #fff3cd;
+        }
+        
+        .upload-icon {
+            font-size: 4em;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        input[type="file"] {
+            display: none;
+        }
+        
+        .preview-area {
+            display: none;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .preview-area img {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 10px;
+            border: 2px solid #ddd;
+            margin-bottom: 15px;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #F4A261 0%, #E07A5F 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(244, 162, 97, 0.4);
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(244, 162, 97, 0.6);
+        }
+        
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .spinner {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #667eea;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+        }
+        
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #c3e6cb;
+        }
+        
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 2px solid #f5c6cb;
+        }
+        
+        .server-status {
+            background: #e7f3ff;
+            border: 2px solid #b3d9ff;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .server-status h3 {
+            color: #004085;
+            margin-bottom: 10px;
+        }
+        
+        .server-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            font-size: 0.95em;
+        }
+        
+        .server-item .status-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        
+        .server-item .status-dot.online {
+            background: #28a745;
+        }
+        
+        .server-item .status-dot.offline {
+            background: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📷 Image Upload & Analysis Test</h1>
+        <p class="subtitle">Test dashboard image upload with ML analysis</p>
+        
+        <div class="server-status">
+            <h3>🔌 Server Status</h3>
+            <div class="server-item">
+                <span><span class="status-dot" id="imageServerDot"></span>Image Analysis (Port 5001)</span>
+                <span id="imageServerStatus">Checking...</span>
+            </div>
+        </div>
+        
+        <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+            <div class="upload-icon">📁</div>
+            <h3>Click or Drag & Drop</h3>
+            <p>Upload your floor plan image (JPG, PNG)</p>
+            <input type="file" id="fileInput" accept="image/*">
+        </div>
+        
+        <div class="preview-area" id="previewArea">
+            <h3>Preview:</h3>
+            <img id="previewImage" src="" alt="Preview">
+            <p id="fileName"></p>
+        </div>
+        
+        <button id="analyzeBtn" disabled onclick="analyzeImage()">
+            🔍 Analyze with ML Model
+        </button>
+        
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <h3>🤖 Analyzing with ML Model...</h3>
+            <p>Generating Vastu Score & 2D Visualization...</p>
+        </div>
+        
+        <div class="status" id="status"></div>
+    </div>
+
+    <script>
+        let selectedFile = null;
+        
+        // Check server status on load
+        window.addEventListener('load', checkServers);
+        
+        async function checkServers() {
+            try {
+                const response = await fetch('http://localhost:5001/health');
+                const data = await response.json();
+                
+                if (data.status === 'ok') {
+                    document.getElementById('imageServerDot').classList.add('online');
+                    document.getElementById('imageServerStatus').textContent = '✅ Online';
+                } else {
+                    throw new Error('Server not ready');
+                }
+            } catch (error) {
+                document.getElementById('imageServerDot').classList.add('offline');
+                document.getElementById('imageServerStatus').textContent = '❌ Offline';
+                showStatus('⚠️ Image Analysis Server is offline. Please start it with: python analyze_image.py', 'error');
+            }
+        }
+        
+        // File input handling
+        const fileInput = document.getElementById('fileInput');
+        const uploadArea = document.getElementById('uploadArea');
+        const previewArea = document.getElementById('previewArea');
+        const previewImage = document.getElementById('previewImage');
+        const fileName = document.getElementById('fileName');
+        const analyzeBtn = document.getElementById('analyzeBtn');
+        
+        fileInput.addEventListener('change', handleFileSelect);
+        
+        // Drag and drop
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+        
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+        
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                fileInput.files = files;
+                handleFileSelect();
+            }
+        });
+        
+        function handleFileSelect() {
+            const file = fileInput.files[0];
+            if (!file) return;
+            
+            if (!file.type.startsWith('image/')) {
+                showStatus('❌ Please select an image file', 'error');
+                return;
+            }
+            
+            selectedFile = file;
+            
+            // Show preview
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                previewImage.src = e.target.result;
+                fileName.textContent = `📄 ${file.name} (${(file.size / 1024).toFixed(2)} KB)`;
+                previewArea.style.display = 'block';
+                analyzeBtn.disabled = false;
+            };
+            reader.readAsDataURL(file);
+        }
+        
+        async function analyzeImage() {
+            if (!selectedFile) {
+                showStatus('❌ Please select an image first', 'error');
+                return;
+            }
+            
+            const loading = document.getElementById('loading');
+            const status = document.getElementById('status');
+            
+            // Show loading
+            loading.style.display = 'block';
+            status.style.display = 'none';
+            analyzeBtn.disabled = true;
+            
+            try {
+                // Convert image to base64
+                const reader = new FileReader();
+                reader.onload = async function(e) {
+                    const imageData = e.target.result;
+                    
+                    console.log('📤 Sending to ML backend:', {
+                        filename: selectedFile.name,
+                        size: selectedFile.size
+                    });
+                    
+                    try {
+                        const response = await fetch('http://localhost:5001/analyze_image', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                image: imageData,
+                                filename: selectedFile.name
+                            })
+                        });
+                        
+                        if (!response.ok) {
+                            throw new Error(`Server error: ${response.status}`);
+                        }
+                        
+                        const result = await response.json();
+                        console.log('📥 Received result:', result);
+                        
+                        if (result.success) {
+                            // Save to localStorage
+                            localStorage.setItem('vastuResults', JSON.stringify(result));
+                            
+                            showStatus(`
+                                ✅ Analysis Complete!<br>
+                                📊 Vastu Score: <strong>${result.vastu_score}%</strong><br>
+                                🔥 Fire: ${result.elements.Fire}% | 💧 Water: ${result.elements.Water}% | 🌍 Earth: ${result.elements.Earth}% | 💨 Air: ${result.elements.Air}% | 🌌 Space: ${result.elements.Space}%<br>
+                                <br>
+                                <button onclick="window.location.href='results.html'">View Full Results & Visualization</button>
+                            `, 'success');
+                        } else {
+                            throw new Error(result.error || 'Analysis failed');
+                        }
+                        
+                    } catch (error) {
+                        console.error('❌ Error:', error);
+                        showStatus(`❌ Error: ${error.message}<br>Make sure the server is running on port 5001`, 'error');
+                    } finally {
+                        loading.style.display = 'none';
+                        analyzeBtn.disabled = false;
+                    }
+                };
+                
+                reader.readAsDataURL(selectedFile);
+                
+            } catch (error) {
+                console.error('❌ Error:', error);
+                showStatus(`❌ Error: ${error.message}`, 'error');
+                loading.style.display = 'none';
+                analyzeBtn.disabled = false;
+            }
+        }
+        
+        function showStatus(message, type) {
+            const status = document.getElementById('status');
+            status.innerHTML = message;
+            status.className = 'status ' + type;
+            status.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
+

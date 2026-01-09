@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎯 Vastu Vision - Evaluation Ready</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: white;
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: white;
+            font-size: 1.2em;
+            margin-bottom: 40px;
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .option-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .option-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+        
+        .option-card h2 {
+            color: #2A363B;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+        
+        .option-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .features {
+            list-style: none;
+            margin: 20px 0;
+        }
+        
+        .features li {
+            padding: 8px 0;
+            color: #2A9D8F;
+            font-weight: 500;
+        }
+        
+        .features li:before {
+            content: "✅ ";
+            margin-right: 10px;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #F4A261 0%, #E07A5F 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(244, 162, 97, 0.5);
+        }
+        
+        .status-bar {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin: 5px 0;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 10px;
+        }
+        
+        .status-dot.online {
+            background: #28a745;
+            box-shadow: 0 0 10px #28a745;
+        }
+        
+        .status-dot.offline {
+            background: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Vastu Vision</h1>
+        <p class="subtitle">AI-Powered Vastu Analysis & Blueprint Generation</p>
+        
+        <div class="status-bar">
+            <h3 style="margin-bottom: 15px; color: #2A363B;">🔌 System Status</h3>
+            <div class="status-item">
+                <span><span class="status-dot" id="imgDot"></span>Image Analysis Server</span>
+                <span id="imgStatus">Checking...</span>
+            </div>
+            <div class="status-item">
+                <span><span class="status-dot" id="spaceDot"></span>Space Analysis Server</span>
+                <span id="spaceStatus">Checking...</span>
+            </div>
+            <div class="status-item">
+                <span><span class="status-dot" id="blueprintDot"></span>Blueprint Generator</span>
+                <span id="blueprintStatus">Checking...</span>
+            </div>
+        </div>
+        
+        <div class="options">
+            <div class="option-card" onclick="window.location.href='DEBUG_DASHBOARD.html'">
+                <h2>📷 Image Upload Analysis</h2>
+                <p>Upload floor plan images and get instant ML-powered Vastu analysis</p>
+                <ul class="features">
+                    <li>Upload JPG/PNG floor plans</li>
+                    <li>ML analyzes image features</li>
+                    <li>Calculates Vastu score</li>
+                    <li>Shows 5 elements breakdown</li>
+                    <li>2D visualization (Matplotlib)</li>
+                    <li>Personalized recommendations</li>
+                </ul>
+                <button>🚀 Start Image Analysis</button>
+            </div>
+            
+            <div class="option-card" onclick="window.location.href='space.html'">
+                <h2>🏗️ Manual Space Entry</h2>
+                <p>Enter space details manually for comprehensive analysis and blueprints</p>
+                <ul class="features">
+                    <li>Enter plot size & orientation</li>
+                    <li>Add rooms with zones</li>
+                    <li>ML analyzes configuration</li>
+                    <li>Same Vastu score & elements</li>
+                    <li>2D visualization</li>
+                    <li>BONUS: Generate 3 optimized blueprints</li>
+                </ul>
+                <button>🚀 Start Manual Entry</button>
+            </div>
+        </div>
+        
+        <div style="background: white; border-radius: 15px; padding: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+            <h2 style="color: #2A363B; margin-bottom: 20px;">📊 What You'll Get</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                <div style="padding: 20px; background: #f8f9fa; border-radius: 10px;">
+                    <h3 style="color: #F4A261; margin-bottom: 10px;">🎯 Vastu Score</h3>
+                    <p style="color: #666;">Comprehensive score based on ML model + Vastu rules</p>
+                </div>
+                <div style="padding: 20px; background: #f8f9fa; border-radius: 10px;">
+                    <h3 style="color: #F4A261; margin-bottom: 10px;">🔥 5 Elements</h3>
+                    <p style="color: #666;">Fire, Water, Earth, Air, Space analysis with percentages</p>
+                </div>
+                <div style="padding: 20px; background: #f8f9fa; border-radius: 10px;">
+                    <h3 style="color: #F4A261; margin-bottom: 10px;">📊 Visualization</h3>
+                    <p style="color: #666;">Bar chart + Radar chart showing element balance</p>
+                </div>
+                <div style="padding: 20px; background: #f8f9fa; border-radius: 10px;">
+                    <h3 style="color: #F4A261; margin-bottom: 10px;">🏗️ Blueprints</h3>
+                    <p style="color: #666;">3 complete floor plans with furniture & dimensions</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('load', checkServers);
+        
+        async function checkServers() {
+            // Check image server
+            try {
+                const imgResp = await fetch('http://localhost:5001/health');
+                const imgData = await imgResp.json();
+                if (imgData.status === 'ok') {
+                    document.getElementById('imgDot').classList.add('online');
+                    document.getElementById('imgStatus').textContent = '✅ Online';
+                    document.getElementById('imgStatus').style.color = '#28a745';
+                } else throw new Error();
+            } catch {
+                document.getElementById('imgDot').classList.add('offline');
+                document.getElementById('imgStatus').textContent = '❌ Offline';
+                document.getElementById('imgStatus').style.color = '#dc3545';
+            }
+            
+            // Check space server
+            try {
+                const spaceResp = await fetch('http://localhost:5000/health');
+                const spaceData = await spaceResp.json();
+                if (spaceData.status === 'ok') {
+                    document.getElementById('spaceDot').classList.add('online');
+                    document.getElementById('spaceStatus').textContent = '✅ Online';
+                    document.getElementById('spaceStatus').style.color = '#28a745';
+                } else throw new Error();
+            } catch {
+                document.getElementById('spaceDot').classList.add('offline');
+                document.getElementById('spaceStatus').textContent = '❌ Offline';
+                document.getElementById('spaceStatus').style.color = '#dc3545';
+            }
+            
+            // Check blueprint server
+            try {
+                const bpResp = await fetch('http://localhost:5002/health');
+                const bpData = await bpResp.json();
+                if (bpData.status === 'ok') {
+                    document.getElementById('blueprintDot').classList.add('online');
+                    document.getElementById('blueprintStatus').textContent = '✅ Online';
+                    document.getElementById('blueprintStatus').style.color = '#28a745';
+                } else throw new Error();
+            } catch {
+                document.getElementById('blueprintDot').classList.add('offline');
+                document.getElementById('blueprintStatus').textContent = '❌ Offline';
+                document.getElementById('blueprintStatus').style.color = '#dc3545';
+            }
+        }
+    </script>
+</body>
+</html>
+

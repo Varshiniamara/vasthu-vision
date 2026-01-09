@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test ML Integration</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .status {
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            font-weight: bold;
+        }
+        .status.success { background: #d4edda; color: #155724; }
+        .status.error { background: #f8d7da; color: #721c24; }
+        .status.info { background: #d1ecf1; color: #0c5460; }
+        button {
+            background: #667eea;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin: 0.5rem;
+        }
+        button:hover { background: #5568d3; }
+        pre {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        .test-result {
+            border-left: 4px solid #667eea;
+            padding: 1rem;
+            margin: 1rem 0;
+            background: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 ML Integration Test</h1>
+        
+        <div class="status info" id="serverStatus">
+            Checking servers...
+        </div>
+        
+        <button onclick="testMLServer()">1️⃣ Test ML Server</button>
+        <button onclick="testAnalysis()">2️⃣ Test Full Analysis</button>
+        <button onclick="goToSpaceForm()">3️⃣ Go to Space Form</button>
+        
+        <div id="results"></div>
+    </div>
+    
+    <script>
+        // Check server status on load
+        window.onload = async () => {
+            const statusDiv = document.getElementById('serverStatus');
+            
+            try {
+                const response = await fetch('http://localhost:5000/health');
+                const data = await response.json();
+                
+                if (data.status === 'ok') {
+                    statusDiv.className = 'status success';
+                    statusDiv.innerHTML = `
+                        ✅ ML Server is RUNNING!<br>
+                        <small>Status: ${data.status} | ML Model: ${data.ml_model} | Visualization: ${data.visualization}</small>
+                    `;
+                }
+            } catch (error) {
+                statusDiv.className = 'status error';
+                statusDiv.innerHTML = `
+                    ❌ ML Server is NOT running!<br>
+                    <small>Please run: python analyze_vastu.py</small>
+                `;
+            }
+        };
+        
+        async function testMLServer() {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '<div class="test-result">Testing ML server...</div>';
+            
+            try {
+                const response = await fetch('http://localhost:5000/health');
+                const data = await response.json();
+                
+                resultsDiv.innerHTML = `
+                    <div class="test-result">
+                        <h3>✅ ML Server Test: PASSED</h3>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    </div>
+                `;
+            } catch (error) {
+                resultsDiv.innerHTML = `
+                    <div class="test-result">
+                        <h3>❌ ML Server Test: FAILED</h3>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+        
+        async function testAnalysis() {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '<div class="test-result">Running full analysis test...</div>';
+            
+            // Sample test data
+            const testData = {
+                plotSize: '1500 sq ft',
+                roomType: '3bhk',
+                orientation: 'north-facing',
+                floorNumber: 1,
+                rooms: [
+                    { name: 'Living Room', zone: 'northwest' },
+                    { name: 'Kitchen', zone: 'southeast' },
+                    { name: 'Master Bedroom', zone: 'southwest' },
+                    { name: 'Bathroom', zone: 'northeast' }
+                ]
+            };
+            
+            try {
+                const response = await fetch('http://localhost:5000/analyze', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(testData)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    resultsDiv.innerHTML = `
+                        <div class="test-result">
+                            <h3>✅ Full Analysis Test: PASSED</h3>
+                            
+                            <h4>📊 Vastu Score: ${result.vastu_score}%</h4>
+                            <p>ML Score: ${result.ml_score}% | Rule Score: ${result.rule_score}%</p>
+                            
+                            <h4>🔥 5 Elements:</h4>
+                            <pre>${JSON.stringify(result.elements, null, 2)}</pre>
+                            
+                            <h4>🎨 2D Visualization:</h4>
+                            ${result.visualization ? 
+                                `<img src="data:image/png;base64,${result.visualization}" style="max-width: 100%; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);" />` : 
+                                '<p>No visualization generated</p>'
+                            }
+                            
+                            <h4>📋 Recommendations:</h4>
+                            <ul>
+                                ${result.recommendations.map(rec => 
+                                    `<li><strong>${rec.element}:</strong> ${rec.message}</li>`
+                                ).join('')}
+                            </ul>
+                        </div>
+                    `;
+                } else {
+                    resultsDiv.innerHTML = `
+                        <div class="test-result">
+                            <h3>⚠️ Analysis completed with errors</h3>
+                            <pre>${JSON.stringify(result, null, 2)}</pre>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultsDiv.innerHTML = `
+                    <div class="test-result">
+                        <h3>❌ Analysis Test: FAILED</h3>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+        
+        function goToSpaceForm() {
+            window.location.href = 'space.html';
+        }
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 Vastu Vision - READY FOR EVALUATION!</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 800px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #667eea;
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .status {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #28a745;
+            font-weight: bold;
+            margin-bottom: 2rem;
+        }
+        .big-button {
+            display: block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 1rem 0;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .big-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+        .feature-box {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            border-left: 4px solid #667eea;
+        }
+        .feature-box h3 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+        .steps {
+            background: #fff3cd;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+        .steps h3 {
+            color: #856404;
+            margin-bottom: 1rem;
+        }
+        .steps ol {
+            margin-left: 1.5rem;
+        }
+        .steps li {
+            margin: 0.5rem 0;
+            color: #856404;
+        }
+        .check {
+            color: #28a745;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏠 Vastu Vision</h1>
+        <div class="status">✅ ML INTEGRATION COMPLETE!</div>
+        
+        <a href="http://localhost:8000/space.html" class="big-button" target="_blank">
+            🚀 START DEMO - CLICK HERE!
+        </a>
+        
+        <div class="feature-box">
+            <h3>🎯 Key Feature Implemented:</h3>
+            <p><strong>ML-Powered Vastu Analysis</strong></p>
+            <p>Space Details Form → Python ML Model → 5 Elements Analysis → Vastu Score</p>
+        </div>
+        
+        <div class="steps">
+            <h3>📋 Demo Steps for Evaluation:</h3>
+            <ol>
+                <li>Click the big button above (opens space form)</li>
+                <li>Fill in space details:
+                    <ul>
+                        <li>Plot Size: <strong>1500 sq ft</strong></li>
+                        <li>Room Type: <strong>3bhk</strong></li>
+                        <li>Orientation: <strong>north-facing</strong></li>
+                        <li>Floor Number: <strong>1</strong></li>
+                    </ul>
+                </li>
+                <li>Add rooms with zones:
+                    <ul>
+                        <li>Living Room → <strong>Northwest</strong></li>
+                        <li>Kitchen → <strong>Southeast</strong></li>
+                        <li>Master Bedroom → <strong>Southwest</strong></li>
+                        <li>Bathroom → <strong>Northeast</strong></li>
+                    </ul>
+                </li>
+                <li>Click <strong>"Submit Space Details"</strong></li>
+                <li>Watch ML analysis in action!</li>
+                <li>See results:
+                    <ul>
+                        <li><span class="check">✅</span> Animated Vastu Score</li>
+                        <li><span class="check">✅</span> 5 Elements (Fire, Water, Earth, Air, Space)</li>
+                        <li><span class="check">✅</span> Each element percentage</li>
+                        <li><span class="check">✅</span> Recommendations</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+        
+        <div class="feature-box">
+            <h3>✅ What's Working:</h3>
+            <p><span class="check">✅</span> Frontend form with validation</p>
+            <p><span class="check">✅</span> Python Flask ML backend</p>
+            <p><span class="check">✅</span> Random Forest ML model integration</p>
+            <p><span class="check">✅</span> 5 elements calculation</p>
+            <p><span class="check">✅</span> Vastu score (0-100%)</p>
+            <p><span class="check">✅</span> Beautiful results visualization</p>
+            <p><span class="check">✅</span> Recommendations engine</p>
+        </div>
+        
+        <div style="text-align: center; margin-top: 2rem;">
+            <a href="http://localhost:8000/DEMO_INDEX.html" target="_blank" style="color: #667eea; text-decoration: none; font-weight: bold;">
+                📄 View All Pages →
+            </a>
+        </div>
+        
+        <div style="text-align: center; margin-top: 1rem; color: #666;">
+            <small>Servers running on localhost:8000 (Frontend) and localhost:5000 (ML Backend)</small>
+        </div>
+    </div>
+    
+    <script>
+        // Auto-check if servers are running
+        setTimeout(() => {
+            fetch('http://localhost:5000/health')
+                .then(r => r.json())
+                .then(data => {
+                    console.log('✅ ML Server is running!', data);
+                })
+                .catch(err => {
+                    console.log('⚠️ ML Server not detected, using fallback mode');
+                });
+        }, 1000);
+    </script>
+</body>
+</html>
+

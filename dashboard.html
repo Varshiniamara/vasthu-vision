@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Vastu Vision</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="dashboard-styles.css">
+    <link rel="stylesheet" href="vastu-animations.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-home"></i>
+                <span>Vastu Vision</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="nav-buttons">
+                <a href="logout.html" class="btn-logout">Logout</a>
+                <a href="dashboard.html" class="btn-dashboard">Dashboard</a>
+            </div>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Section -->
+    <section class="dashboard-section">
+        <!-- Animated Vastu Background -->
+        <div class="vastu-animation-container">
+            <div class="vastu-floating-element"></div>
+            <div class="vastu-floating-element"></div>
+            <div class="vastu-floating-element"></div>
+            <div class="vastu-floating-element"></div>
+            <div class="vastu-floating-element"></div>
+            <div class="vastu-floating-element"></div>
+        </div>
+        
+        <!-- Vastu Compass Animation -->
+        <div class="vastu-compass-animated"></div>
+        
+        <!-- Vastu Energy Lines -->
+        <div class="vastu-energy-line"></div>
+        <div class="vastu-energy-line"></div>
+        <div class="vastu-energy-line"></div>
+        
+        <!-- Vastu Mandala Animation -->
+        <div class="vastu-mandala-animated"></div>
+        
+        <div class="dashboard-container">
+            <div class="dashboard-card">
+                <!-- Upload Area -->
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h2>Drop your floor plan or blueprint here</h2>
+                    <p>or click to browse files</p>
+                    <input type="file" id="fileInput" accept=".jpg,.jpeg,.pdf,.png" multiple style="display: none;">
+                </div>
+
+                <!-- File Guidelines -->
+                <div class="file-guidelines">
+                    <div class="guideline-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Preferred files: Architectural drawings, floor plans, or home blueprints</span>
+                    </div>
+                    <div class="guideline-item">
+                        <i class="fas fa-bolt"></i>
+                        <span>For best Vastu analysis, use clear images showing room layouts and dimensions</span>
+                    </div>
+                    <div class="guideline-item">
+                        <span class="file-types">(Use .jpg, .jpeg, .pdf or .png files up to 5MB)</span>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button class="btn-analyze" id="analyzeBtn" disabled>
+                        <i class="fas fa-search"></i>
+                        Analyze My Floor Plan
+                    </button>
+                    
+                    <button class="btn-space" id="spaceBtn">
+                        <i class="fas fa-plus"></i>
+                        Create New Space
+                    </button>
+                    
+                    <a href="space.html" class="btn-simple">
+                        <i class="fas fa-edit"></i>
+                        Space Details
+                    </a>
+                    
+                    <div class="premium-banner">
+                        <i class="fas fa-star"></i>
+                        <span>Get detailed remedies and personalized recommendations with our premium service</span>
+                    </div>
+                </div>
+
+                <!-- Uploaded Files Preview -->
+                <div class="uploaded-files" id="uploadedFiles" style="display: none;">
+                    <h3>Uploaded Files</h3>
+                    <div class="files-list" id="filesList"></div>
+                </div>
+
+                <!-- Analysis Results -->
+                <div class="analysis-results" id="analysisResults" style="display: none;">
+                    <h3>Vastu Analysis Results</h3>
+                    <div class="results-content">
+                        <div class="result-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <h4>Energy Flow Analysis</h4>
+                                <p>Your space shows good energy flow in the main areas</p>
+                            </div>
+                        </div>
+                        <div class="result-item">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <div>
+                                <h4>Room Placement</h4>
+                                <p>Consider repositioning the kitchen for better Vastu compliance</p>
+                            </div>
+                        </div>
+                        <div class="result-item">
+                            <i class="fas fa-compass"></i>
+                            <div>
+                                <h4>Directional Analysis</h4>
+                                <p>North-east corner needs attention for optimal energy balance</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-home"></i>
+                        <span>Vastu Vision</span>
+                    </div>
+                    <p>Bridging ancient wisdom with modern technology to create harmonious living spaces.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#features">Features</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Account</h4>
+                    <ul>
+                        <li><a href="register.html">Register</a></li>
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="#">Help Center</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <div class="contact-info">
+                        <p><i class="fas fa-envelope"></i> info@vastuvision.com</p>
+                        <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Vastu Street, Harmony City</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Vastu Vision. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="dashboard-script.js"></script>
+</body>
+</html>

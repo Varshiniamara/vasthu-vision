@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XR Space Setup | VastuVision</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00F0FF;
+            --secondary: #7000FF;
+            --bg-dark: #0A0A0F;
+            --bg-panel: #14141E;
+            --text-main: #FFFFFF;
+            --text-dim: #A0A0B0;
+            --success: #00FF94;
+            --glass: rgba(20, 20, 30, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(112, 0, 255, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(0, 240, 255, 0.1) 0%, transparent 20%);
+            min-height: 100vh;
+        }
+
+        /* Navbar */
+        .navbar {
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .logo i {
+            color: var(--primary);
+        }
+
+        .logo span {
+            background: linear-gradient(90deg, #fff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 8rem auto 4rem;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .setup-panel {
+            background: var(--bg-panel);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .panel-header {
+            margin-bottom: 2rem;
+        }
+
+        .panel-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .panel-header p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            color: var(--text-dim);
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary);
+            opacity: 0.7;
+        }
+
+        .form-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 1rem 1rem 3rem;
+            border-radius: 10px;
+            color: #fff;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(0, 240, 255, 0.05);
+        }
+
+        /* Geo Buttons */
+        .geo-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-geo {
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 0.8rem;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .btn-geo:hover {
+            background: var(--primary);
+            color: #000;
+        }
+
+        /* Room Tags */
+        .room-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        .room-tag {
+            background: rgba(255,255,255,0.05);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .room-tag.selected {
+            background: rgba(112, 0, 255, 0.2);
+            border-color: var(--secondary);
+            color: #fff;
+        }
+
+        /* Map Placeholder */
+        .map-preview {
+            height: 100%;
+            background: #111;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .map-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.3;
+        }
+
+        .map-overlay {
+            z-index: 2;
+            text-align: center;
+            background: rgba(0,0,0,0.6);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--secondary), #9D00FF);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            width: 100%;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 2rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(112, 0, 255, 0.3);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            background: rgba(0, 255, 148, 0.1);
+            color: var(--success);
+            border-radius: 5px;
+            font-size: 0.8rem;
+            margin-top: 1rem;
+            border: 1px solid rgba(0, 255, 148, 0.2);
+        }
+
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-cube"></i>
+            <span>VastuVision XR</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="xr_space.html" class="active">Spatial Setup</a>
+            <a href="xr_ar_vr.html">Live AR/VR</a>
+            <a href="xr_dashboard.html">Dashboard</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Input Panel -->
+        <div class="setup-panel">
+            <div class="panel-header">
+                <h2>Spatial Configuration</h2>
+                <p>Initialize the Vastu Engine with precise geospatial data.</p>
+            </div>
+
+            <form id="spaceForm">
+                <div class="form-group">
+                    <label class="form-label">Geospatial Coordinates</label>
+                    <div class="geo-controls">
+                        <div class="btn-geo" onclick="detectLocation()">
+                            <i class="fas fa-location-crosshairs"></i> Auto-Detect
+                        </div>
+                        <div class="btn-geo" onclick="fetchEnvironment()">
+                            <i class="fas fa-satellite-dish"></i> Environment Scan
+                        </div>
+                    </div>
+                </div>
+
+                <div class="geo-controls" style="grid-template-columns: 1fr 1fr 1fr;">
+                    <div class="input-wrapper">
+                        <i class="fas fa-globe-asia"></i>
+                        <input type="text" id="lat" class="form-input" placeholder="Lat" readonly style="background: rgba(0,0,0,0.3);">
+                    </div>
+                    <div class="input-wrapper">
+                        <i class="fas fa-globe-americas"></i>
+                        <input type="text" id="lng" class="form-input" placeholder="Long" readonly style="background: rgba(0,0,0,0.3);">
+                    </div>
+                     <div class="input-wrapper">
+                        <i class="fas fa-mountain"></i>
+                        <input type="text" id="elevation" class="form-input" placeholder="Alt (m)" readonly style="background: rgba(0,0,0,0.3);">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Plot Details</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-ruler-combined"></i>
+                        <input type="text" id="plotSize" class="form-input" placeholder="Total Area (e.g. 1200 sq ft)">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Key Zones Configuration</label>
+                    <p style="color:var(--text-dim); font-size: 0.8rem; margin-bottom:0.5rem;">Select intended locations for key elements:</p>
+                    
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                        <input type="text" placeholder="Kitchen Location" class="form-input" id="kitchenZone">
+                        <input type="text" placeholder="Master Bedroom" class="form-input" id="bedroomZone">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                     <label class="form-label">Project Name</label>
+                     <input type="text" class="form-input" placeholder="My Dream Home" id="projectName">
+                </div>
+
+                <button type="button" class="btn-primary" onclick="submitSpaceData()">
+                    <i class="fas fa-rocket"></i> Initialize Vastu Engine
+                </button>
+            </form>
+        </div>
+
+        <!-- Map/Preview Panel -->
+        <div class="map-preview">
+            <img src="https://api.mapbox.com/styles/v1/mapbox/dark-v10/static/0,0,2,0/800x600?access_token=pk.placeholder" alt="Map View" class="map-bg" id="mapBg">
+            
+            <div class="map-overlay">
+                <i class="fas fa-satellite" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                <h3>Geospatial Intelligence</h3>
+                <p id="geoStatus">Waiting for coordinates...</p>
+                <div id="envData" style="display: none; margin-top: 1rem; text-align: left;">
+                    <div class="status-badge"><i class="fas fa-compass"></i> True North: <span id="trueNorthVal">-</span></div><br>
+                    <div class="status-badge"><i class="fas fa-sun"></i> Sun Angle: <span id="sunAngleVal">-</span></div><br>
+                    <div class="status-badge"><i class="fas fa-mountain"></i> Terrain: <span id="terrainVal">-</span></div>
+                </div>
+            </div>
+            
+            <!-- Simulated AR Grid Overlay -->
+            <div style="position: absolute; width: 100%; height: 100%; background: radial-gradient(circle, transparent 50%, rgba(0,0,0,0.8)); pointer-events: none;"></div>
+            <div style="position: absolute; bottom: 20px; right: 20px; font-family: monospace; color: var(--primary); font-size: 0.8rem;">
+                SYS: ONLINE<br>
+                GPS: ACQUIRING<br>
+                VASTU_DB: CONNECTED
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function detectLocation() {
+            const status = document.getElementById('geoStatus');
+            status.innerHTML = "<i class='fas fa-spinner fa-spin'></i> Acquiring Satellites...";
+            
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                status.innerHTML = "Globalization not supported.";
+            }
+        }
+
+        function showPosition(position) {
+            document.getElementById('lat').value = position.coords.latitude.toFixed(6);
+            document.getElementById('lng').value = position.coords.longitude.toFixed(6);
+            document.getElementById('elevation').value = 'Detecting...'; // Will come from backend
+            document.getElementById('geoStatus').innerHTML = "Coordinates Acquired. Fetching Environmental Data...";
+            
+            // Call Backend
+            fetchEnvironmentData(position.coords.latitude, position.coords.longitude);
+        }
+
+        function showError(error) {
+             document.getElementById('geoStatus').innerHTML = "Error: " + error.message;
+        }
+        
+        async function fetchEnvironmentData(lat, lng) {
+            try {
+                // Call the new Geospatial Service
+                const response = await fetch('http://localhost:5006/get_geospatial_data', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({latitude: lat, longitude: lng})
+                });
+                
+                const data = await response.json();
+                
+                if(data.success) {
+                    const si = data.spatial_intelligence;
+                    document.getElementById('elevation').value = si.elevation_meters;
+                    document.getElementById('envData').style.display = 'block';
+                    document.getElementById('trueNorthVal').innerText = si.true_north_deviation + "°";
+                    document.getElementById('sunAngleVal').innerText = si.sun_path.sunrise_azimuth + "°";
+                    document.getElementById('terrainVal').innerText = si.terrain_analysis.slope;
+                    
+                    document.getElementById('geoStatus').innerHTML = "Scan Complete. Ready to Initialize.";
+                }
+                
+            } catch(e) {
+                console.error(e);
+                document.getElementById('geoStatus').innerHTML = "Offline Mode. Using simulated data.";
+            }
+        }
+
+        function fetchEnvironment() {
+            // Manual trigger if needed, or simulation
+            detectLocation(); 
+        }
+
+        function submitSpaceData() {
+            // Save to localStorage for now to pass to other pages
+            const data = {
+                lat: document.getElementById('lat').value,
+                lng: document.getElementById('lng').value,
+                elevation: document.getElementById('elevation').value,
+                plotSize: document.getElementById('plotSize').value,
+                projectName: document.getElementById('projectName').value
+            };
+            localStorage.setItem('vastu_project', JSON.stringify(data));
+            
+            // Generate standard Vastu Analysis (call old 5000 API)
+            // Then redirect
+            window.location.href = 'xr_dashboard.html';
+        }
+    </script>
+</body>
+</html>

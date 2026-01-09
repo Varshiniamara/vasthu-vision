@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Features - Vastu Vision</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .ai-features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .feature-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .feature-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .feature-header h2 {
+            color: #2A9D8F;
+            margin: 0;
+        }
+        
+        .ai-blueprint-card, .energy-heatmap-card {
+            background: #f9f9f9;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .blueprint-image img, .heatmap-image img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .ai-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+        
+        .ai-badge.fallback {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .layout-suggestions {
+            margin-top: 1rem;
+        }
+        
+        .suggestions-list {
+            display: grid;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .suggestion-card {
+            background: #f9f9f9;
+            border-radius: 10px;
+            padding: 1.5rem;
+            border-left: 4px solid #2A9D8F;
+        }
+        
+        .suggestion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .score-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .ideal-zone {
+            color: #2A9D8F;
+            font-weight: 600;
+        }
+        
+        .avoid-zone {
+            color: #dc3545;
+            font-weight: 600;
+        }
+        
+        .reasoning {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 5px;
+            font-style: italic;
+            color: #666;
+        }
+        
+        .elements-tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .element-tag {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .element-fire { background: #FF6B6B; }
+        .element-water { background: #4ECDC4; }
+        .element-earth { background: #95E1D3; }
+        .element-air { background: #F38181; }
+        .element-space { background: #AA96DA; }
+        
+        .element-balance {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 10px;
+        }
+        
+        .element-balance-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .element-name {
+            min-width: 80px;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+        
+        .balance-bar {
+            flex: 1;
+            height: 25px;
+            background: #f0f0f0;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        
+        .balance-fill {
+            height: 100%;
+            border-radius: 15px;
+            transition: width 0.3s ease;
+        }
+        
+        .balance-value {
+            min-width: 60px;
+            text-align: right;
+            font-weight: 600;
+        }
+        
+        .btn-generate {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-generate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-download {
+            background: #2A9D8F;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-download:hover {
+            background: #21867a;
+            transform: translateY(-2px);
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 3rem;
+        }
+        
+        .loading i {
+            font-size: 3rem;
+            color: #2A9D8F;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .method-badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            margin-left: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="ai-features-container">
+        <div class="feature-section">
+            <div class="feature-header">
+                <i class="fas fa-robot" style="font-size: 2rem; color: #667eea;"></i>
+                <h2>AI-Powered Blueprint Generation</h2>
+            </div>
+            <p>Generate professional 2D floor plans using AI image generation (DALL-E, Stable Diffusion)</p>
+            <button class="btn-generate" onclick="generateAIBlueprint()">
+                <i class="fas fa-magic"></i>
+                Generate AI Blueprint
+            </button>
+            <div id="aiBlueprintResult"></div>
+        </div>
+        
+        <div class="feature-section">
+            <div class="feature-header">
+                <i class="fas fa-lightbulb" style="font-size: 2rem; color: #F5A623;"></i>
+                <h2>AI Layout Suggestions</h2>
+            </div>
+            <p>Get intelligent layout suggestions based on Vastu principles with AI reasoning</p>
+            <button class="btn-generate" onclick="getLayoutSuggestions()">
+                <i class="fas fa-brain"></i>
+                Get AI Suggestions
+            </button>
+            <div id="layoutSuggestionsResult"></div>
+        </div>
+        
+        <div class="feature-section">
+            <div class="feature-header">
+                <i class="fas fa-fire" style="font-size: 2rem; color: #FF6B6B;"></i>
+                <h2>Energy Balance Heatmap</h2>
+            </div>
+            <p>Visualize Vastu energy distribution across zones (Fire, Water, Earth, Air, Space)</p>
+            <button class="btn-generate" onclick="generateEnergyHeatmap()">
+                <i class="fas fa-map"></i>
+                Generate Heatmap
+            </button>
+            <div id="energyHeatmapResult"></div>
+        </div>
+    </div>
+    
+    <script src="ai_frontend_integration.js"></script>
+    <script>
+        // Get space data from localStorage or use default
+        function getSpaceData() {
+            const saved = localStorage.getItem('spaceData');
+            if (saved) {
+                return JSON.parse(saved);
+            }
+            
+            // Default data for testing
+            return {
+                plotSize: '2800 sq ft',
+                roomType: '2bhk',
+                orientation: 'north-facing',
+                floorNumber: '1',
+                rooms: [
+                    { name: 'Living Room', zone: 'northeast' },
+                    { name: 'Kitchen', zone: 'southeast' },
+                    { name: 'Master Bedroom', zone: 'southwest' },
+                    { name: 'Bathroom', zone: 'northwest' }
+                ]
+            };
+        }
+        
+        async function generateAIBlueprint() {
+            const resultDiv = document.getElementById('aiBlueprintResult');
+            resultDiv.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i><p>Generating AI Blueprint...</p></div>';
+            
+            try {
+                const spaceData = getSpaceData();
+                const result = await vastuAI.generateAIBlueprint(spaceData);
+                vastuAI.displayAIBlueprint('aiBlueprintResult', result);
+            } catch (error) {
+                resultDiv.innerHTML = `<div style="color: #dc3545; padding: 1rem; background: #fee; border-radius: 10px;"><strong>Error:</strong> ${error.message}</div>`;
+            }
+        }
+        
+        async function getLayoutSuggestions() {
+            const resultDiv = document.getElementById('layoutSuggestionsResult');
+            resultDiv.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i><p>Getting AI Layout Suggestions...</p></div>';
+            
+            try {
+                const spaceData = getSpaceData();
+                const result = await vastuAI.getLayoutSuggestions(spaceData);
+                vastuAI.displayLayoutSuggestions('layoutSuggestionsResult', result);
+            } catch (error) {
+                resultDiv.innerHTML = `<div style="color: #dc3545; padding: 1rem; background: #fee; border-radius: 10px;"><strong>Error:</strong> ${error.message}</div>`;
+            }
+        }
+        
+        async function generateEnergyHeatmap() {
+            const resultDiv = document.getElementById('energyHeatmapResult');
+            resultDiv.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i><p>Generating Energy Heatmap...</p></div>';
+            
+            try {
+                const spaceData = getSpaceData();
+                const result = await vastuAI.generateEnergyHeatmap(spaceData, 'all');
+                
+                // Calculate element balance
+                const balance = await vastuAI.calculateEnergyBalance(spaceData);
+                result.element_balance = balance.element_balance;
+                
+                vastuAI.displayEnergyHeatmap('energyHeatmapResult', result);
+            } catch (error) {
+                resultDiv.innerHTML = `<div style="color: #dc3545; padding: 1rem; background: #fee; border-radius: 10px;"><strong>Error:</strong> ${error.message}</div>`;
+            }
+        }
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 Vastu Vision - Quick Start</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 800px;
+            width: 100%;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2A363B;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        
+        .option-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            border: 2px solid #ddd;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .option-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border-color: #F4A261;
+        }
+        
+        .option-card h2 {
+            color: #2A363B;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .option-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+        
+        .status.online {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status.offline {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #F4A261 0%, #E07A5F 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 15px;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(244, 162, 97, 0.6);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Vastu Vision - Quick Start</h1>
+        
+        <div class="option-card" onclick="window.location.href='index.html'">
+            <h2>🏠 Home Page</h2>
+            <p>Start from the landing page with full navigation</p>
+            <button>Go to Home</button>
+        </div>
+        
+        <div class="option-card" onclick="window.location.href='login.php'">
+            <h2>🔐 Login</h2>
+            <p>Login to access your dashboard</p>
+            <button>Go to Login</button>
+        </div>
+        
+        <div class="option-card" onclick="window.location.href='register.php'">
+            <h2>📝 Register</h2>
+            <p>Create a new account</p>
+            <button>Go to Register</button>
+        </div>
+        
+        <div class="option-card" onclick="testDashboard()">
+            <h2>📊 Dashboard (Image Upload)</h2>
+            <p>Upload floor plan images and get ML analysis with Vastu score</p>
+            <div id="imageServerStatus" class="status offline">Checking server...</div>
+            <button>Go to Dashboard</button>
+        </div>
+        
+        <div class="option-card" onclick="window.location.href='space.html'">
+            <h2>🏗️ Space Details Form</h2>
+            <p>Enter space details manually and get analysis + blueprints</p>
+            <div id="spaceServerStatus" class="status offline">Checking server...</div>
+            <button>Go to Space Form</button>
+        </div>
+        
+        <div class="option-card" onclick="window.location.href='TEST_IMAGE_UPLOAD.html'">
+            <h2>🧪 Test Image Upload</h2>
+            <p>Simple test page for image upload and ML analysis</p>
+            <button>Go to Test Page</button>
+        </div>
+    </div>
+
+    <script>
+        // Check servers on load
+        window.addEventListener('load', checkServers);
+        
+        async function checkServers() {
+            // Check image analysis server
+            try {
+                const imgResponse = await fetch('http://localhost:5001/health');
+                const imgData = await imgResponse.json();
+                
+                if (imgData.status === 'ok') {
+                    document.getElementById('imageServerStatus').textContent = '✅ Server Online';
+                    document.getElementById('imageServerStatus').classList.remove('offline');
+                    document.getElementById('imageServerStatus').classList.add('online');
+                }
+            } catch (error) {
+                document.getElementById('imageServerStatus').textContent = '❌ Server Offline';
+            }
+            
+            // Check space analysis server
+            try {
+                const spaceResponse = await fetch('http://localhost:5000/health');
+                const spaceData = await spaceResponse.json();
+                
+                if (spaceData.status === 'ok') {
+                    document.getElementById('spaceServerStatus').textContent = '✅ Server Online';
+                    document.getElementById('spaceServerStatus').classList.remove('offline');
+                    document.getElementById('spaceServerStatus').classList.add('online');
+                }
+            } catch (error) {
+                document.getElementById('spaceServerStatus').textContent = '❌ Server Offline';
+            }
+        }
+        
+        function testDashboard() {
+            // Check if image server is online
+            fetch('http://localhost:5001/health')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'ok') {
+                        window.location.href = 'dashboard.php';
+                    } else {
+                        alert('⚠️ Image Analysis Server is offline!\n\nPlease start it with:\npython analyze_image.py');
+                    }
+                })
+                .catch(error => {
+                    alert('⚠️ Image Analysis Server is offline!\n\nPlease start it with:\npython analyze_image.py');
+                });
+        }
+    </script>
+</body>
+</html>
+

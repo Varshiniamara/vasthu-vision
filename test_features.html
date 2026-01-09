@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Vastu Feature Test</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            padding: 40px;
+            background: #f4f4f4;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn {
+            padding: 15px 30px;
+            background: #00F0FF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .upload-section {
+            border: 2px dashed #ccc;
+            padding: 40px;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        #results {
+            margin-top: 30px;
+            display: none;
+        }
+
+        .viz-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🛠️ Vastu Feature Test Console</h1>
+
+        <div class="upload-section" onclick="document.getElementById('fileInput').click()">
+            <i class="fas fa-cloud-upload-alt" style="font-size: 40px; color: #00F0FF; margin-bottom: 10px;"></i>
+            <h3>Click to Upload Floor Plan</h3>
+            <p>Testing Base Vastu Image Analysis (Port 5001)</p>
+            <input type="file" id="fileInput" accept="image/*" style="display:none">
+        </div>
+
+        <div id="status" style="text-align: center; font-weight: bold; margin-bottom: 20px;"></div>
+
+        <div id="results">
+            <h2 style="border-bottom: 2px solid #eee; padding-bottom: 10px;">Analysis Results</h2>
+            <div style="display: flex; justify-content: space-around; margin: 20px 0;">
+                <div style="text-align: center;">
+                    <div style="font-size: 3rem; color: #2A9D8F; font-weight: bold;" id="score">--</div>
+                    <div>Vastu Score</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 3rem; color: #E9C46A; font-weight: bold;" id="elements-score">--</div>
+                    <div>Elemental Balance</div>
+                </div>
+            </div>
+
+            <div class="viz-container">
+                <h3>Visualizations (Heatmap / Charts)</h3>
+                <img id="viz-image" src="" alt="Analysis Visualization">
+            </div>
+
+            <div class="viz-container">
+                <h3>Vastu Recommendations</h3>
+                <div id="recommendations"
+                    style="text-align: left; background: #f9f9f9; padding: 20px; border-radius: 10px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('fileInput').addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const status = document.getElementById('status');
+            status.innerText = "Processing " + file.name + "...";
+
+            // Convert to Base64
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = async () => {
+                const base64 = reader.result;
+
+                try {
+                    const res = await fetch('http://localhost:5001/analyze_image', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ image: base64, filename: file.name })
+                    });
+
+                    const data = await res.json();
+
+                    if (data.success) {
+                        status.innerText = "✅ Analysis Complete";
+                        document.getElementById('results').style.display = 'block';
+                        document.getElementById('score').innerText = data.vastu_score + "%";
+                        document.getElementById('elements-score').innerText = Object.values(data.elements).reduce((a, b) => a + b, 0) / 5 + "%";
+                        document.getElementById('viz-image').src = "data:image/png;base64," + data.visualization;
+
+                        const recDiv = document.getElementById('recommendations');
+                        recDiv.innerHTML = data.recommendations.map(r =>
+                            `<div style="margin-bottom:10px;"><strong>${r.element}:</strong> ${r.message}</div>`
+                        ).join('');
+
+                    } else {
+                        status.innerText = "❌ Error: " + data.error;
+                    }
+
+                } catch (err) {
+                    status.innerText = "❌ Connection Error: " + err.message;
+                    console.error(err);
+                }
+            };
+        });
+    </script>
+</body>
+
+</html>

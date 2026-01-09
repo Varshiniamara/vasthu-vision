@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission Control | VastuVision XR</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00F0FF;
+            --secondary: #7000FF;
+            --bg-dark: #0A0A0F;
+            --bg-panel: #14141E;
+            --text-main: #FFFFFF;
+            --text-dim: #A0A0B0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Outfit', sans-serif;
+            margin: 0;
+            background-image:
+                linear-gradient(rgba(10, 10, 15, 0.9), rgba(10, 10, 15, 0.9)),
+                url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop');
+            background-size: cover;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        /* Navbar */
+        .navbar {
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            margin-left: 2rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Main Grid */
+        .dashboard-grid {
+            max-width: 1400px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            grid-template-rows: auto 1fr;
+            gap: 2rem;
+        }
+
+        /* Panels */
+        .panel {
+            background: var(--bg-panel);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Profile / Geo Panel */
+        .geo-panel {
+            grid-row: 1 /span 2;
+        }
+
+        .project-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .geo-stat {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.9rem;
+        }
+
+        .geo-stat span:first-child {
+            color: var(--text-dim);
+        }
+
+        .geo-stat span:last-child {
+            color: var(--primary);
+            font-family: monospace;
+        }
+
+        /* Actions */
+        .action-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 1rem;
+            width: 100%;
+            margin-top: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .action-btn:hover {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: var(--primary);
+        }
+
+        /* Main Display */
+        .main-display {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--secondary);
+        }
+
+        .score-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 5px solid var(--bg-dark);
+            box-shadow: 0 0 0 5px var(--secondary), 0 0 20px rgba(112, 0, 255, 0.5);
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        /* Blueprints Section */
+        .blueprints-section {
+            grid-column: 2;
+            margin-top: 2rem;
+        }
+
+        .blueprint-grid {
+            margin-top: 1rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .blueprint-card {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .blueprint-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .bp-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .bp-info {
+            padding: 1rem;
+        }
+
+        .bp-info h4 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1rem;
+        }
+
+        .bp-tag {
+            font-size: 0.75rem;
+            padding: 0.3rem 0.6rem;
+            background: rgba(0, 255, 148, 0.1);
+            color: #00ff94;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        /* Loading */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-dark);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid transparent;
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="loader">
+        <div class="loader-spinner"></div>
+        <p style="margin-top:1rem; color:var(--primary); letter-spacing:1px;">INITIALIZING XR ENGINE...</p>
+    </div>
+
+    <nav class="navbar">
+        <div class="logo"><i class="fas fa-cube"></i> VastuVision XR</div>
+        <div class="nav-links">
+            <a href="xr_space.html">Setup</a>
+            <a href="xr_ar_vr.html">Live AR</a>
+            <a href="#" class="active">Dashboard</a>
+        </div>
+    </nav>
+
+    <div class="dashboard-grid">
+        <!-- Sidebar -->
+        <div class="panel geo-panel">
+            <h3 class="project-title" id="projName">Loading...</h3>
+            <p style="color:var(--text-dim); font-size:0.9rem; margin-bottom:1.5rem;">Coordinates Locked</p>
+
+            <div class="geo-stat">
+                <span>Latitude</span>
+                <span id="dispLat">--</span>
+            </div>
+            <div class="geo-stat">
+                <span>Longitude</span>
+                <span id="dispLng">--</span>
+            </div>
+            <div class="geo-stat">
+                <span>Elevation</span>
+                <span id="dispElev">-- m</span>
+            </div>
+            <div class="geo-stat">
+                <span>Plot Size</span>
+                <span id="dispArea">--</span>
+            </div>
+            <div class="geo-stat">
+                <span>True North</span>
+                <span style="color:#ff4444;" id="dispNorth">--°</span>
+            </div>
+
+            <div style="margin-top: 2rem;">
+                <button class="action-btn" onclick="window.location.href='xr_ar_vr.html'">
+                    <i class="fas fa-vr-cardboard" style="color:var(--primary)"></i> Launch Live AR
+                </button>
+                <button class="action-btn" onclick="generateBlueprints()">
+                    <i class="fas fa-drafting-compass" style="color:#ff00ff"></i> Regenerate Blueprints
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div>
+            <!-- Stats Row -->
+            <div class="main-display">
+                <div class="panel stat-card">
+                    <div class="score-circle" id="vastuScore">--</div>
+                    <h3>Vastu Compliance</h3>
+                    <p style="color:var(--text-dim); font-size:0.9rem;">AI-Calculated geometric harmony score based on
+                        geospatial alignment.</p>
+                </div>
+
+                <div class="panel stat-card" style="text-align: left;">
+                    <h3 style="margin-top:0;">Spatial Integrity</h3>
+                    <div style="margin-top:1rem;">
+                        <div
+                            style="display:flex; justify-content:space-between; margin-bottom:0.5rem; font-size:0.9rem;">
+                            <span>Elemental Balance</span>
+                            <span style="color:var(--primary)">85%</span>
+                        </div>
+                        <div style="width:100%; height:6px; background:rgba(255,255,255,0.1); border-radius:3px;">
+                            <div style="width:85%; height:100%; background:var(--primary); border-radius:3px;"></div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:1.5rem;">
+                        <div
+                            style="display:flex; justify-content:space-between; margin-bottom:0.5rem; font-size:0.9rem;">
+                            <span>Directional Flow</span>
+                            <span style="color:var(--secondary)">92%</span>
+                        </div>
+                        <div style="width:100%; height:6px; background:rgba(255,255,255,0.1); border-radius:3px;">
+                            <div style="width:92%; height:100%; background:var(--secondary); border-radius:3px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blueprints -->
+            <div class="blueprints-section">
+                <h3 style="display:flex; align-items:center; gap:10px;">
+                    <i class="fas fa-layer-group" style="color:var(--primary)"></i>
+                    Architectural Blueprints
+                    <span
+                        style="font-size:0.8rem; background:rgba(255,255,255,0.1); padding:2px 8px; border-radius:10px; font-weight:400;">Construction
+                        Ready</span>
+                </h3>
+
+                <div class="blueprint-grid" id="bpGrid">
+                    <!-- Loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Init
+        setTimeout(() => {
+            document.getElementById('loader').style.display = 'none';
+            loadData();
+        }, 1500);
+
+        function loadData() {
+            const raw = localStorage.getItem('vastu_project');
+            if (!raw) return;
+
+            const data = JSON.parse(raw);
+
+            document.getElementById('projName').innerText = data.projectName || "Project Alpha";
+            document.getElementById('dispLat').innerText = data.lat;
+            document.getElementById('dispLng').innerText = data.lng;
+            document.getElementById('dispElev').innerText = data.elevation + " m";
+            document.getElementById('dispArea').innerText = data.plotSize;
+
+            // Randomize Vastu Score for Demo (or fetch from real API if hooked up)
+            // Here we simulate the fetch result
+            const score = 87;
+            animateScore(score);
+
+            // Mock fetching blueprints
+            generateBlueprintsMock();
+
+            // Fetch Geospatial details again silently to fill "True North"
+            fetch('http://localhost:5006/get_geospatial_data', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ latitude: parseFloat(data.lat), longitude: parseFloat(data.lng) })
+            }).then(r => r.json()).then(d => {
+                if (d.success) {
+                    document.getElementById('dispNorth').innerText = d.spatial_intelligence.true_north_deviation.toFixed(2) + "°";
+                }
+            });
+        }
+
+        function animateScore(target) {
+            let current = 0;
+            const el = document.getElementById('vastuScore');
+            const interval = setInterval(() => {
+                current += 1;
+                el.innerText = current + "%";
+                if (current >= target) clearInterval(interval);
+            }, 20);
+        }
+
+        async function generateBlueprintsMock() {
+            // In a real flow, we would call the Python API here.
+            // For now, we reuse the existing generate_blueprints API but trigger it via JS
+
+            const bpContainer = document.getElementById('bpGrid');
+            bpContainer.innerHTML = '<p>Generating blueprints via AI Engine...</p>';
+
+            const raw = localStorage.getItem('vastu_project');
+            const data = JSON.parse(raw);
+
+            // Prepare payload for the existing Python generator
+            const payload = {
+                plotSize: data.plotSize,
+                rooms: [
+                    { name: "Kitchen", zone: "southeast" },
+                    { name: "Master Bedroom", zone: "southwest" },
+                    { name: "Living Room", zone: "northeast" },
+                    { name: "Bathroom", zone: "northwest" }
+                ], // Default set for demo
+                orientation: "north-facing"
+            };
+
+            try {
+                const res = await fetch('http://localhost:5002/generate_blueprints', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await res.json();
+
+                if (result.success) {
+                    bpContainer.innerHTML = '';
+                    result.blueprints.forEach(bp => {
+                        const card = document.createElement('div');
+                        card.className = 'blueprint-card';
+                        card.innerHTML = `
+                            <img src="data:image/png;base64,${bp.image}" class="bp-img">
+                            <div class="bp-info">
+                                <h4>${bp.name}</h4>
+                                <span class="bp-tag">Score: ${bp.vastu_score}%</span>
+                                <p style="font-size:0.8rem; color:#aaa; margin-top:0.5rem;">${bp.description}</p>
+                            </div>
+                        `;
+                        card.onclick = () => {
+                            // Download logic
+                            const a = document.createElement('a');
+                            a.href = "data:image/png;base64," + bp.image;
+                            a.download = "VastuVision_Blueprint_" + bp.name + ".png";
+                            a.click();
+                        };
+                        bpContainer.appendChild(card);
+                    });
+                }
+            } catch (e) {
+                console.error(e);
+                bpContainer.innerHTML = 'Failed to load blueprints. Ensure server Port 5002 is running.';
+            }
+        }
+    </script>
+</body>
+
+</html>

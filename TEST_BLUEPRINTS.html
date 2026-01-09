@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏗️ Quick Blueprint Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 1400px;
+            width: 100%;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2A363B;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #F4A261 0%, #E07A5F 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(244, 162, 97, 0.4);
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(244, 162, 97, 0.6);
+        }
+        
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        #loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            font-size: 1.5em;
+            color: #667eea;
+        }
+        
+        .spinner {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #667eea;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        #results {
+            display: none;
+        }
+        
+        .blueprints-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .blueprint-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .blueprint-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .blueprint-card h3 {
+            color: #2A363B;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .blueprint-card img {
+            width: 100%;
+            border-radius: 10px;
+            border: 2px solid #ddd;
+        }
+        
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+            border: 2px solid #c3e6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏗️ Quick Blueprint Generator</h1>
+        
+        <div class="button-group">
+            <button onclick="generateBlueprints('small')">Generate Small House (1200 sq ft)</button>
+            <button onclick="generateBlueprints('medium')">Generate Medium House (2800 sq ft)</button>
+            <button onclick="generateBlueprints('large')">Generate Large House (4000 sq ft)</button>
+        </div>
+        
+        <div id="loading">
+            <div class="spinner"></div>
+            <p>🎨 Generating Professional Blueprints...</p>
+            <p style="font-size: 0.9em; color: #666; margin-top: 10px;">
+                Creating 3 complete floor plans with all rooms filled!
+            </p>
+        </div>
+        
+        <div id="results"></div>
+    </div>
+
+    <script>
+        async function generateBlueprints(size) {
+            const loading = document.getElementById('loading');
+            const results = document.getElementById('results');
+            
+            // Show loading
+            loading.style.display = 'block';
+            results.style.display = 'none';
+            
+            // Disable all buttons
+            document.querySelectorAll('button').forEach(btn => btn.disabled = true);
+            
+            // Prepare data based on size
+            const sizeMap = {
+                'small': { plotSize: '1200', roomType: '1bhk' },
+                'medium': { plotSize: '2800', roomType: '2bhk' },
+                'large': { plotSize: '4000', roomType: '3bhk' }
+            };
+            
+            const data = {
+                ...sizeMap[size],
+                orientation: 'north-facing',
+                floorNumber: '1',
+                rooms: []
+            };
+            
+            try {
+                console.log('📤 Sending request:', data);
+                
+                const response = await fetch('http://localhost:5002/generate_blueprints', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status}`);
+                }
+                
+                const result = await response.json();
+                console.log('📥 Received response:', result);
+                
+                if (result.success && result.blueprints) {
+                    displayBlueprints(result.blueprints);
+                } else {
+                    throw new Error(result.message || 'Failed to generate blueprints');
+                }
+                
+            } catch (error) {
+                console.error('❌ Error:', error);
+                results.innerHTML = `
+                    <div style="background: #f8d7da; color: #721c24; padding: 20px; border-radius: 10px; text-align: center;">
+                        <h3>⚠️ Error Generating Blueprints</h3>
+                        <p>${error.message}</p>
+                        <p style="font-size: 0.9em; margin-top: 10px;">
+                            Make sure the blueprint server is running on port 5002
+                        </p>
+                    </div>
+                `;
+                results.style.display = 'block';
+            } finally {
+                loading.style.display = 'none';
+                document.querySelectorAll('button').forEach(btn => btn.disabled = false);
+            }
+        }
+        
+        function displayBlueprints(blueprints) {
+            const results = document.getElementById('results');
+            
+            const titles = [
+                '🏛️ Optimal Vastu Layout',
+                '🏢 Modern Functional Layout',
+                '🏠 Compact Efficient Layout'
+            ];
+            
+            let html = `
+                <div class="success-message">
+                    <h3>✅ Successfully Generated ${blueprints.length} Professional Blueprints!</h3>
+                    <p>All rooms are filled with complete layouts - NO blank spaces!</p>
+                </div>
+                <div class="blueprints-grid">
+            `;
+            
+            blueprints.forEach((blueprint, index) => {
+                html += `
+                    <div class="blueprint-card">
+                        <h3>${titles[index] || `Blueprint ${index + 1}`}</h3>
+                        <img src="data:image/png;base64,${blueprint}" alt="Blueprint ${index + 1}">
+                        <button onclick="downloadBlueprint('${blueprint}', '${titles[index]}')">
+                            📥 Download
+                        </button>
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+            results.innerHTML = html;
+            results.style.display = 'block';
+        }
+        
+        function downloadBlueprint(base64Data, title) {
+            const link = document.createElement('a');
+            link.href = 'data:image/png;base64,' + base64Data;
+            link.download = title.replace(/[^a-z0-9]/gi, '_') + '.png';
+            link.click();
+        }
+    </script>
+</body>
+</html>
+

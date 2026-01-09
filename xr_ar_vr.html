@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live AR/VR Scanner | VastuVision XR</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        :root {
+            --primary: #00F0FF;
+            --secondary: #7000FF;
+            --bg-dark: #0A0A0F;
+            --glass-panel: rgba(20, 20, 30, 0.85);
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: white;
+            font-family: 'Outfit', sans-serif;
+            margin: 0;
+            overflow: hidden;
+            /* App like feel */
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Top Bar */
+        .xr-header {
+            padding: 1rem 2rem;
+            background: rgba(0, 0, 0, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .xr-logo {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Viewport */
+        .viewport {
+            flex: 1;
+            position: relative;
+            background: #000;
+        }
+
+        #camera-feed {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+        }
+
+        #ar-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* HUD Elements */
+        .hud-compass {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 40px;
+            background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.2), transparent);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: monospace;
+            border-bottom: 2px solid var(--primary);
+            overflow: hidden;
+            z-index: 5;
+        }
+
+        .hud-compass span {
+            margin: 0 20px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .hud-status {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            text-align: right;
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: var(--primary);
+            z-index: 5;
+        }
+
+        .info-panel {
+            position: absolute;
+            bottom: 150px;
+            left: 20px;
+            background: var(--glass-panel);
+            padding: 1rem;
+            border-radius: 10px;
+            border-left: 3px solid var(--primary);
+            width: 300px;
+            backdrop-filter: blur(10px);
+            z-index: 5;
+            transition: all 0.3s;
+        }
+
+        .info-title {
+            color: var(--primary);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .info-content {
+            font-size: 0.85rem;
+            line-height: 1.4;
+            color: #ddd;
+        }
+
+        /* Capture Button */
+        #capture-btn {
+            position: fixed;
+            /* Fixed to ensure it floats above everything */
+            bottom: 120px;
+            /* Clear the bottom controls bar */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.25);
+            border: 4px solid var(--primary);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+            cursor: pointer;
+            z-index: 1000;
+            /* Super high z-index */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        #capture-btn:active {
+            transform: translateX(-50%) scale(0.9);
+        }
+
+        #capture-actions {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: none;
+            gap: 20px;
+            z-index: 21;
+        }
+
+        .action-pill {
+            background: var(--primary);
+            color: black;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+        }
+
+        .action-pill.secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid white;
+        }
+
+        /* Controls */
+        .controls {
+            padding: 1rem;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            border-top: 1px solid #333;
+            z-index: 10;
+        }
+
+        .btn-control {
+            background: #222;
+            border: 1px solid #444;
+            color: #fff;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-control.active,
+        .btn-control:hover {
+            background: var(--primary);
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+            border-color: var(--primary);
+        }
+
+        /* 3D Container */
+        #three-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            z-index: 3;
+        }
+
+        /* Video Upload Overlay */
+        #upload-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 20;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .upload-box {
+            border: 2px dashed var(--primary);
+            padding: 3rem;
+            border-radius: 20px;
+            text-align: center;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="xr-header">
+        <div class="xr-logo"><i class="fas fa-vr-cardboard"></i> VastuVision XR</div>
+        <div style="font-family: monospace; font-size: 0.8rem;">LIVE SITE ANALYSIS</div>
+    </div>
+
+    <div class="viewport">
+        <!-- Live Camera Feed -->
+        <video id="camera-feed" autoplay playsinline muted></video>
+
+        <!-- 3D Scene (Hidden by default) -->
+        <div id="three-container"></div>
+
+        <!-- AR HUD Overlay -->
+        <div id="ar-overlay">
+            <!-- Drawn by JS Canvas/SVG -->
+            <canvas id="ar-canvas" style="width:100%; height:100%;"></canvas>
+        </div>
+
+        <!-- HUD Elements -->
+        <div class="hud-compass">
+            <span>NW</span> <span>N</span> <span>NE</span> <span>E</span> <span>SE</span> <span>S</span>
+        </div>
+
+        <div class="hud-status">
+            GPS: <span style="color:#0f0">LOCKED</span><br>
+            ACC: ±3m<br>
+            MODE: <span id="current-mode">AR LIVE</span>
+        </div>
+
+        <div class="info-panel" id="zone-info">
+            <div class="info-title" id="zone-title">Scanning...</div>
+            <div class="info-content" id="zone-desc">Align camera with floor plane. Press Capture to analyze.</div>
+        </div>
+
+        <!-- Capture UI -->
+        <div id="capture-btn" onclick="captureImage()">
+            <div style="width: 60px; height: 60px; background: white; border-radius: 50%;"></div>
+        </div>
+
+        <div id="capture-actions">
+            <button class="action-pill secondary" onclick="retake()">Retake</button>
+            <button class="action-pill" onclick="proceedToDashboard()">Generat Report</button>
+        </div>
+
+        <!-- Video Upload UI -->
+        <div id="upload-overlay">
+            <div class="upload-box" onclick="document.getElementById('videoInput').click()">
+                <i class="fas fa-cloud-upload-alt" style="font-size: 3rem; color: var(--primary);"></i>
+                <h3 style="margin: 1rem 0;">Upload Site Video</h3>
+                <p>Select a video file to run Deep Learning Vastu Analysis</p>
+                <input type="file" id="videoInput" accept="video/*" style="display:none"
+                    onchange="handleVideoUpload(this)">
+            </div>
+            <div id="upload-progress" style="margin-top: 1rem; display:none;">Processing... 0%</div>
+            <img id="processed-result"
+                style="max-width: 80%; max-height: 60vh; margin-top: 20px; border: 2px solid var(--primary); display:none;">
+            <button onclick="closeUpload()"
+                style="margin-top: 20px; background: transparent; color: white; border: 1px solid white; padding: 10px 20px; cursor: pointer;">Close</button>
+        </div>
+    </div>
+
+    <div class="controls">
+        <div class="btn-control active" onclick="switchMode('ar')" title="Live AR"><i class="fas fa-camera"></i></div>
+        <div class="btn-control" onclick="switchMode('3d')" title="3D Model"><i class="fas fa-cube"></i></div>
+        <div class="btn-control" onclick="openUpload()" title="Video Analysis"><i class="fas fa-file-video"></i></div>
+        <div class="btn-control" onclick="window.location.href='xr_dashboard.html'" title="Exit"><i
+                class="fas fa-times"></i></div>
+    </div>
+
+    <script>
+        // --- 1. Camera Handling ---
+        const video = document.getElementById('camera-feed');
+
+        async function startCamera() {
+            // Check if protocol is file://
+            if (window.location.protocol === 'file:') {
+                document.getElementById('zone-title').innerText = "⚠️ Protocol Error";
+                document.getElementById('zone-title').style.color = "red";
+                document.getElementById('zone-desc').innerHTML = "Camera access is BLOCKED on file:// protocol.<br><a href='http://localhost:8000/xr_ar_vr.html' style='color:#00F0FF'>Click here to open via Localhost</a>";
+                document.getElementById('zone-desc').style.color = "#ff8888";
+                return;
+            }
+
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+                video.srcObject = stream;
+            } catch (err) {
+                console.error("Camera access denied:", err);
+                document.getElementById('zone-desc').innerText = "Camera access denied. Please enable permissions or use Video Upload mode.";
+            }
+        }
+
+        startCamera();
+
+        // --- 2. AR Overlay (Compass/Grid) ---
+        const canvas = document.getElementById('ar-canvas');
+        const ctx = canvas.getContext('2d');
+        let animationFrame;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function drawAR() {
+            if (video.paused) return; // Stop drawing if captured
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const w = canvas.width;
+            const h = canvas.height;
+            const cx = w / 2;
+            const cy = h / 2;
+
+            // Draw Dynamic Grid (Perspective Floor)
+            ctx.strokeStyle = 'rgba(0, 240, 255, 0.4)';
+            ctx.lineWidth = 2;
+
+            const keyPoints = {
+                top: window.innerHeight * 0.4,
+                bottom: window.innerHeight * 0.9
+            };
+
+            ctx.beginPath();
+            // Floor Grid Lines
+            for (let i = 0; i <= 5; i++) {
+                // Vertical-ish lines
+                let xOffset = (i - 2.5) * (w * 0.3);
+                ctx.moveTo(cx + xOffset * 0.2, keyPoints.top);
+                ctx.lineTo(cx + xOffset, keyPoints.bottom);
+            }
+
+            // Horizontal lines
+            for (let i = 0; i <= 5; i++) {
+                let y = keyPoints.top + (i / 5) * (keyPoints.bottom - keyPoints.top);
+                let widthAtY = w * 0.2 + (w * 0.8) * (i / 5);
+                ctx.moveTo(cx - widthAtY / 2, y);
+                ctx.lineTo(cx + widthAtY / 2, y);
+            }
+            ctx.stroke();
+
+            // HUD Crosshair
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(cx - 20, cy); ctx.lineTo(cx + 20, cy);
+            ctx.moveTo(cx, cy - 20); ctx.lineTo(cx, cy + 20);
+            ctx.stroke();
+
+            animationFrame = requestAnimationFrame(drawAR);
+        }
+
+        drawAR();
+
+
+        function proceedToDashboard() {
+            window.location.href = 'xr_dashboard.html';
+        }
+
+        async function captureImage() {
+            video.pause();
+            cancelAnimationFrame(animationFrame);
+
+            // Draw current frame to offscreen canvas
+            const capCanvas = document.createElement('canvas');
+            capCanvas.width = video.videoWidth;
+            capCanvas.height = video.videoHeight;
+            capCanvas.getContext('2d').drawImage(video, 0, 0);
+
+            // Show UI Loading
+            document.getElementById('capture-btn').style.display = 'none';
+            document.getElementById('zone-title').innerText = "Analyzing Scene...";
+            document.getElementById('zone-desc').innerText = "Running Vastu Geometry Checks...";
+
+            const base64 = capCanvas.toDataURL('image/jpeg');
+
+            try {
+                // Call Port 5001 (Image Analysis) for single frame analysis
+                const res = await fetch('http://localhost:5001/analyze_image', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        image: base64,
+                        filename: 'live_capture.jpg'
+                    })
+                });
+
+                const data = await res.json();
+
+                if (data.success) {
+                    // Store result for dashboard
+                    localStorage.setItem('last_capture_result', JSON.stringify(data));
+
+                    document.getElementById('zone-title').innerText = "Scan Complete";
+                    document.getElementById('zone-desc').innerHTML = `Vastu Score: <b style="color:#0f0">${data.vastu_score}%</b>. <br>${data.recommendations[0] ? data.recommendations[0].message : 'Good structure detected.'}`;
+                    document.getElementById('capture-actions').style.display = 'flex';
+                } else {
+                    document.getElementById('zone-title').innerText = "Analysis Failed";
+                    document.getElementById('zone-desc').innerText = "Could not identify room boundaries. Try again.";
+                    document.getElementById('capture-actions').style.display = 'flex';
+                }
+            } catch (e) {
+                console.error(e);
+                document.getElementById('zone-title').innerText = "Connection Error";
+                document.getElementById('zone-desc').innerText = "Check if services are running (Port 5001).";
+                document.getElementById('capture-actions').style.display = 'flex';
+            }
+        }
+
+        function retake() {
+            video.play();
+            drawAR();
+            document.getElementById('capture-btn').style.display = 'flex';
+            document.getElementById('capture-actions').style.display = 'none';
+            document.getElementById('zone-title').innerText = "Scanning...";
+            document.getElementById('zone-desc').innerText = "Align camera with floor plane. Press Capture to analyze.";
+        }
+
+        function proceedToDashboard() {
+            window.location.href = 'xr_dashboard.html';
+        }
+
+        // --- 4. Mode Switching ---
+        function switchMode(mode) {
+            document.querySelectorAll('.btn-control').forEach(b => b.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+
+            document.getElementById('current-mode').innerText = mode.toUpperCase() + " ACTIVE";
+
+            if (mode === '3d') {
+                document.getElementById('three-container').style.display = 'block';
+                initThreeJS();
+            } else {
+                document.getElementById('three-container').style.display = 'none';
+            }
+        }
+
+        // --- 5. Video Analysis Upload ---
+        function openUpload() {
+            document.getElementById('upload-overlay').style.display = 'flex';
+        }
+
+        function closeUpload() {
+            document.getElementById('upload-overlay').style.display = 'none';
+        }
+
+        async function handleVideoUpload(input) {
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                const formData = new FormData();
+                formData.append('video', file);
+
+                const progress = document.getElementById('upload-progress');
+                progress.style.display = 'block';
+                progress.innerText = "Analyzing Spatial Geometry... Please Wait.";
+
+                try {
+                    const res = await fetch('http://localhost:5007/analyze_video', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    const data = await res.json();
+
+                    if (data.success) {
+                        progress.innerText = "Analysis Complete.";
+                        const img = document.getElementById('processed-result');
+                        img.src = "data:image/jpeg;base64," + data.ar_frame;
+                        img.style.display = 'block';
+
+                        document.getElementById('zone-title').innerText = "AI Analysis Report";
+                        document.getElementById('zone-desc').innerText = data.analysis.compliance_check;
+                    } else {
+                        progress.innerText = "Error: " + data.error;
+                    }
+                } catch (e) {
+                    console.error(e);
+                    progress.innerText = "Connection Failed. Ensure Server Port 5007 is running.";
+                }
+            }
+        }
+
+        // --- 6. Three.js Initialization (Simple Plot Visualization) ---
+        let scene, camera, renderer, cube;
+        function initThreeJS() {
+            if (scene) return; // Already inited
+
+            const container = document.getElementById('three-container');
+
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x111111);
+            scene.fog = new THREE.Fog(0x111111, 10, 50);
+
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 5;
+            camera.position.y = 2;
+            camera.lookAt(0, 0, 0);
+
+            renderer = new THREE.WebGLRenderer({ alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            container.appendChild(renderer.domElement);
+
+            // Ground Grid
+            const gridHelper = new THREE.GridHelper(20, 20, 0x00F0FF, 0x333333);
+            scene.add(gridHelper);
+
+            // Simple House Block
+            const geometry = new THREE.BoxGeometry(2, 1, 2);
+            const material = new THREE.MeshBasicMaterial({ color: 0x7000FF, wireframe: true, transparent: true, opacity: 0.8 });
+            cube = new THREE.Mesh(geometry, material);
+            cube.position.y = 0.5;
+            scene.add(cube);
+
+            function animate() {
+                requestAnimationFrame(animate);
+                cube.rotation.y += 0.005;
+                renderer.render(scene, camera);
+            }
+            animate();
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐛 Debug Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .section {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+        
+        button {
+            background: #F4A261;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        
+        button:hover {
+            background: #E07A5F;
+        }
+        
+        #log {
+            background: #2d2d2d;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .log-entry {
+            margin: 5px 0;
+        }
+        
+        input[type="file"] {
+            display: none;
+        }
+        
+        .upload-area {
+            border: 3px dashed #ccc;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .upload-area:hover {
+            border-color: #F4A261;
+            background: #fff3cd;
+        }
+        
+        #preview {
+            max-width: 300px;
+            margin: 20px auto;
+            display: none;
+        }
+        
+        #preview img {
+            width: 100%;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🐛 Dashboard Debug Tool</h1>
+    <p>This page helps you test the image upload and ML analysis step by step</p>
+    
+    <div class="section">
+        <h2>1️⃣ Server Status Check</h2>
+        <div id="serverStatus" class="status info">Checking...</div>
+        <button onclick="checkServer()">🔄 Recheck Server</button>
+    </div>
+    
+    <div class="section">
+        <h2>2️⃣ Upload Image</h2>
+        <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+            <h3>📁 Click to Upload Image</h3>
+            <p>Select any floor plan image (JPG/PNG)</p>
+            <input type="file" id="fileInput" accept="image/*" onchange="handleFile(event)">
+        </div>
+        <div id="preview">
+            <h4>Preview:</h4>
+            <img id="previewImg" src="" alt="Preview">
+            <p id="fileName"></p>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>3️⃣ Test Analysis</h2>
+        <button onclick="testAnalysis()" id="analyzeBtn" disabled>🔍 Analyze Image</button>
+        <button onclick="testWithMockData()">🧪 Test with Mock Data</button>
+    </div>
+    
+    <div class="section">
+        <h2>4️⃣ Activity Log</h2>
+        <button onclick="clearLog()">🗑️ Clear Log</button>
+        <div id="log"></div>
+    </div>
+    
+    <div class="section" id="results" style="display: none;">
+        <h2>5️⃣ Results</h2>
+        <div id="resultsContent"></div>
+    </div>
+
+    <script>
+        let selectedFile = null;
+        
+        function log(message, type = 'info') {
+            const logDiv = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString();
+            const color = type === 'error' ? '#ff4444' : type === 'success' ? '#00ff00' : '#00ffff';
+            logDiv.innerHTML += `<div class="log-entry" style="color: ${color}">[${timestamp}] ${message}</div>`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+            console.log(message);
+        }
+        
+        function clearLog() {
+            document.getElementById('log').innerHTML = '';
+        }
+        
+        async function checkServer() {
+            log('🔍 Checking image analysis server...', 'info');
+            const statusDiv = document.getElementById('serverStatus');
+            
+            try {
+                const response = await fetch('http://localhost:5001/health');
+                const data = await response.json();
+                
+                if (data.status === 'ok') {
+                    statusDiv.className = 'status success';
+                    statusDiv.textContent = '✅ Image Analysis Server is ONLINE (Port 5001)';
+                    log('✅ Server is online and ready!', 'success');
+                } else {
+                    throw new Error('Server returned unexpected status');
+                }
+            } catch (error) {
+                statusDiv.className = 'status error';
+                statusDiv.textContent = '❌ Image Analysis Server is OFFLINE';
+                log('❌ Server is offline! Start it with: python analyze_image.py', 'error');
+            }
+        }
+        
+        function handleFile(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            if (!file.type.startsWith('image/')) {
+                log('❌ Please select an image file!', 'error');
+                return;
+            }
+            
+            selectedFile = file;
+            log(`📁 File selected: ${file.name} (${(file.size / 1024).toFixed(2)} KB)`, 'success');
+            
+            // Show preview
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('previewImg').src = e.target.result;
+                document.getElementById('fileName').textContent = file.name;
+                document.getElementById('preview').style.display = 'block';
+                document.getElementById('analyzeBtn').disabled = false;
+            };
+            reader.readAsDataURL(file);
+        }
+        
+        async function testAnalysis() {
+            if (!selectedFile) {
+                log('❌ No file selected!', 'error');
+                return;
+            }
+            
+            log('🚀 Starting analysis...', 'info');
+            log('📤 Converting image to base64...', 'info');
+            
+            const reader = new FileReader();
+            reader.onload = async function(e) {
+                const imageData = e.target.result;
+                log('✅ Image converted to base64', 'success');
+                log(`📏 Data length: ${imageData.length} characters`, 'info');
+                
+                log('📡 Sending to ML backend...', 'info');
+                
+                try {
+                    const response = await fetch('http://localhost:5001/analyze_image', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            image: imageData,
+                            filename: selectedFile.name
+                        })
+                    });
+                    
+                    log(`📥 Response received: ${response.status} ${response.statusText}`, 'info');
+                    
+                    const result = await response.json();
+                    log('✅ Response parsed successfully!', 'success');
+                    log(`📊 Vastu Score: ${result.vastu_score}%`, 'success');
+                    log(`🔥 Elements: Fire=${result.elements.Fire}, Water=${result.elements.Water}, Earth=${result.elements.Earth}, Air=${result.elements.Air}, Space=${result.elements.Space}`, 'info');
+                    
+                    displayResults(result);
+                    
+                } catch (error) {
+                    log(`❌ Error: ${error.message}`, 'error');
+                    console.error('Full error:', error);
+                }
+            };
+            
+            reader.readAsDataURL(selectedFile);
+        }
+        
+        function testWithMockData() {
+            log('🧪 Testing with mock data...', 'info');
+            
+            const mockResult = {
+                success: true,
+                vastu_score: 78.5,
+                ml_score: 80,
+                rule_score: 77,
+                elements: {
+                    Fire: 75,
+                    Water: 82,
+                    Earth: 80,
+                    Air: 76,
+                    Space: 79
+                },
+                recommendations: [
+                    { element: 'Fire', score: 75, message: 'Kitchen placement is good but can be optimized' },
+                    { element: 'Air', score: 76, message: 'Consider improving ventilation in northwest area' }
+                ],
+                visualization: null
+            };
+            
+            log('✅ Mock data created', 'success');
+            displayResults(mockResult);
+        }
+        
+        function displayResults(result) {
+            log('🎨 Displaying results...', 'info');
+            
+            const resultsDiv = document.getElementById('results');
+            const resultsContent = document.getElementById('resultsContent');
+            
+            let html = `
+                <div style="text-align: center; margin: 30px 0;">
+                    <div style="font-size: 4em; font-weight: bold; color: #F4A261;">${result.vastu_score}%</div>
+                    <div style="font-size: 1.2em; margin-top: 10px;">Vastu Score</div>
+                    <div style="font-size: 0.9em; color: #666; margin-top: 5px;">
+                        ML: ${result.ml_score}% | Rules: ${result.rule_score}%
+                    </div>
+                </div>
+                
+                <h3>🔥 Elements Breakdown</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin: 20px 0;">
+            `;
+            
+            const elementIcons = {
+                'Fire': '🔥',
+                'Water': '💧',
+                'Earth': '🌍',
+                'Air': '💨',
+                'Space': '🌌'
+            };
+            
+            for (const [element, score] of Object.entries(result.elements)) {
+                const color = score >= 70 ? '#2A9D8F' : score >= 50 ? '#F4A261' : '#ff4757';
+                html += `
+                    <div style="background: white; padding: 15px; border-radius: 10px; text-align: center; border: 2px solid ${color};">
+                        <div style="font-size: 2em;">${elementIcons[element]}</div>
+                        <div style="font-weight: bold; margin: 10px 0;">${element}</div>
+                        <div style="font-size: 1.5em; color: ${color};">${score}%</div>
+                    </div>
+                `;
+            }
+            
+            html += `</div>`;
+            
+            if (result.recommendations && result.recommendations.length > 0) {
+                html += `<h3>💡 Recommendations</h3>`;
+                result.recommendations.forEach(rec => {
+                    html += `
+                        <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin: 10px 0; border-left: 4px solid #F4A261;">
+                            <div style="font-weight: bold;">${elementIcons[rec.element]} ${rec.element}</div>
+                            <div style="color: #666; margin-top: 5px;">${rec.message}</div>
+                        </div>
+                    `;
+                });
+            }
+            
+            if (result.visualization) {
+                html += `
+                    <h3>📊 2D Visualization</h3>
+                    <img src="data:image/png;base64,${result.visualization}" style="max-width: 100%; border-radius: 10px;">
+                `;
+            }
+            
+            resultsContent.innerHTML = html;
+            resultsDiv.style.display = 'block';
+            
+            log('✅ Results displayed successfully!', 'success');
+        }
+        
+        // Check server on load
+        window.addEventListener('load', checkServer);
+    </script>
+</body>
+</html>
+
