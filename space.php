@@ -22,6 +22,8 @@ $user_name = $_SESSION['user_name'] ?? 'User';
     <link rel="stylesheet" href="space-styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=places"></script>
 </head>
 <body>
     <!-- Navigation -->
@@ -94,12 +96,15 @@ $user_name = $_SESSION['user_name'] ?? 'User';
                             </div>
                         </div>
 
-                        <div id="mapContainer" style="height: 250px; background: #eee; border-radius: 12px; margin-bottom: 20px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #ddd;">
-                            <div id="mapPlaceholder" style="text-align: center; color: #999;">
-                                <i class="fas fa-map-marked-alt" style="font-size: 3rem; margin-bottom: 10px;"></i>
-                                <p>Map will appear here after location detection</p>
+                        <div id="mapContainer" style="height: 250px; background: #eee; border-radius: 12px; margin-bottom: 20px; position: relative; overflow: hidden; border: 1px solid #ddd;">
+                            <div id="mapPlaceholder" style="display: flex; align-items: center; justify-content: center; height: 100%; text-align: center; color: #999;">
+                                <div>
+                                    <i class="fas fa-map-marked-alt" style="font-size: 3rem; margin-bottom: 10px;"></i>
+                                    <p>Map will appear here after location detection</p>
+                                </div>
                             </div>
-                            <img id="mapView" src="" alt="Map View" style="display: none; width: 100%; height: 100%; object-fit: cover;">
+                            <!-- Google Map will render here -->
+                            <div id="googleMap" style="display: none; width: 100%; height: 100%;"></div>
                         </div>
 
                         <div id="envInfo" style="display: none; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;">

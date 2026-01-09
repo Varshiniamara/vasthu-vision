@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XR Space Setup | VastuVision</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=places"></script>
     <style>
         :root {
             --primary: #00F0FF;
@@ -28,7 +31,7 @@
         body {
             background-color: var(--bg-dark);
             color: var(--text-main);
-            background-image: 
+            background-image:
                 radial-gradient(circle at 10% 20%, rgba(112, 0, 255, 0.1) 0%, transparent 20%),
                 radial-gradient(circle at 90% 80%, rgba(0, 240, 255, 0.1) 0%, transparent 20%);
             min-height: 100vh;
@@ -62,6 +65,7 @@
 
         .logo span {
             background: linear-gradient(90deg, #fff, var(--primary));
+            background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -78,7 +82,8 @@
             transition: color 0.3s;
         }
 
-        .nav-links a:hover, .nav-links a.active {
+        .nav-links a:hover,
+        .nav-links a.active {
             color: var(--primary);
         }
 
@@ -97,7 +102,7 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 20px;
             padding: 2.5rem;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
         .panel-header {
@@ -192,11 +197,11 @@
         }
 
         .room-tag {
-            background: rgba(255,255,255,0.05);
+            background: rgba(255, 255, 255, 0.05);
             padding: 0.5rem 1rem;
             border-radius: 20px;
             font-size: 0.85rem;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             cursor: pointer;
             transition: all 0.2s;
         }
@@ -212,7 +217,7 @@
             height: 100%;
             background: #111;
             border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             position: relative;
             overflow: hidden;
             display: flex;
@@ -234,11 +239,11 @@
         .map-overlay {
             z-index: 2;
             text-align: center;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0, 0, 0, 0.6);
             padding: 2rem;
             border-radius: 15px;
             backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .btn-primary {
@@ -272,9 +277,9 @@
             margin-top: 1rem;
             border: 1px solid rgba(0, 255, 148, 0.2);
         }
-
     </style>
 </head>
+
 <body>
 
     <nav class="navbar">
@@ -314,15 +319,18 @@
                 <div class="geo-controls" style="grid-template-columns: 1fr 1fr 1fr;">
                     <div class="input-wrapper">
                         <i class="fas fa-globe-asia"></i>
-                        <input type="text" id="lat" class="form-input" placeholder="Lat" readonly style="background: rgba(0,0,0,0.3);">
+                        <input type="text" id="lat" class="form-input" placeholder="Lat" readonly
+                            style="background: rgba(0,0,0,0.3);">
                     </div>
                     <div class="input-wrapper">
                         <i class="fas fa-globe-americas"></i>
-                        <input type="text" id="lng" class="form-input" placeholder="Long" readonly style="background: rgba(0,0,0,0.3);">
+                        <input type="text" id="lng" class="form-input" placeholder="Long" readonly
+                            style="background: rgba(0,0,0,0.3);">
                     </div>
-                     <div class="input-wrapper">
+                    <div class="input-wrapper">
                         <i class="fas fa-mountain"></i>
-                        <input type="text" id="elevation" class="form-input" placeholder="Alt (m)" readonly style="background: rgba(0,0,0,0.3);">
+                        <input type="text" id="elevation" class="form-input" placeholder="Alt (m)" readonly
+                            style="background: rgba(0,0,0,0.3);">
                     </div>
                 </div>
 
@@ -336,17 +344,18 @@
 
                 <div class="form-group">
                     <label class="form-label">Key Zones Configuration</label>
-                    <p style="color:var(--text-dim); font-size: 0.8rem; margin-bottom:0.5rem;">Select intended locations for key elements:</p>
-                    
+                    <p style="color:var(--text-dim); font-size: 0.8rem; margin-bottom:0.5rem;">Select intended locations
+                        for key elements:</p>
+
                     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
                         <input type="text" placeholder="Kitchen Location" class="form-input" id="kitchenZone">
                         <input type="text" placeholder="Master Bedroom" class="form-input" id="bedroomZone">
                     </div>
                 </div>
-                
+
                 <div class="form-group">
-                     <label class="form-label">Project Name</label>
-                     <input type="text" class="form-input" placeholder="My Dream Home" id="projectName">
+                    <label class="form-label">Project Name</label>
+                    <input type="text" class="form-input" placeholder="My Dream Home" id="projectName">
                 </div>
 
                 <button type="button" class="btn-primary" onclick="submitSpaceData()">
@@ -357,22 +366,30 @@
 
         <!-- Map/Preview Panel -->
         <div class="map-preview">
-            <img src="https://api.mapbox.com/styles/v1/mapbox/dark-v10/static/0,0,2,0/800x600?access_token=pk.placeholder" alt="Map View" class="map-bg" id="mapBg">
-            
+            <!-- Google Map Background -->
+            <div id="xrGoogleMap" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.4;">
+            </div>
+
             <div class="map-overlay">
                 <i class="fas fa-satellite" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
                 <h3>Geospatial Intelligence</h3>
                 <p id="geoStatus">Waiting for coordinates...</p>
                 <div id="envData" style="display: none; margin-top: 1rem; text-align: left;">
-                    <div class="status-badge"><i class="fas fa-compass"></i> True North: <span id="trueNorthVal">-</span></div><br>
-                    <div class="status-badge"><i class="fas fa-sun"></i> Sun Angle: <span id="sunAngleVal">-</span></div><br>
-                    <div class="status-badge"><i class="fas fa-mountain"></i> Terrain: <span id="terrainVal">-</span></div>
+                    <div class="status-badge"><i class="fas fa-compass"></i> True North: <span
+                            id="trueNorthVal">-</span></div><br>
+                    <div class="status-badge"><i class="fas fa-sun"></i> Sun Angle: <span id="sunAngleVal">-</span>
+                    </div><br>
+                    <div class="status-badge"><i class="fas fa-mountain"></i> Terrain: <span id="terrainVal">-</span>
+                    </div>
                 </div>
             </div>
-            
+
             <!-- Simulated AR Grid Overlay -->
-            <div style="position: absolute; width: 100%; height: 100%; background: radial-gradient(circle, transparent 50%, rgba(0,0,0,0.8)); pointer-events: none;"></div>
-            <div style="position: absolute; bottom: 20px; right: 20px; font-family: monospace; color: var(--primary); font-size: 0.8rem;">
+            <div
+                style="position: absolute; width: 100%; height: 100%; background: radial-gradient(circle, transparent 50%, rgba(0,0,0,0.8)); pointer-events: none;">
+            </div>
+            <div
+                style="position: absolute; bottom: 20px; right: 20px; font-family: monospace; color: var(--primary); font-size: 0.8rem;">
                 SYS: ONLINE<br>
                 GPS: ACQUIRING<br>
                 VASTU_DB: CONNECTED
@@ -384,7 +401,7 @@
         function detectLocation() {
             const status = document.getElementById('geoStatus');
             status.innerHTML = "<i class='fas fa-spinner fa-spin'></i> Acquiring Satellites...";
-            
+
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(showPosition, showError);
             } else {
@@ -392,43 +409,97 @@
             }
         }
 
+        let xrMapInstance = null;
+
         function showPosition(position) {
-            document.getElementById('lat').value = position.coords.latitude.toFixed(6);
-            document.getElementById('lng').value = position.coords.longitude.toFixed(6);
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+
+            document.getElementById('lat').value = lat.toFixed(6);
+            document.getElementById('lng').value = lng.toFixed(6);
             document.getElementById('elevation').value = 'Detecting...'; // Will come from backend
             document.getElementById('geoStatus').innerHTML = "Coordinates Acquired. Fetching Environmental Data...";
-            
+
+            // Initialize Google Map
+            initXRMap(lat, lng);
+
             // Call Backend
-            fetchEnvironmentData(position.coords.latitude, position.coords.longitude);
+            fetchEnvironmentData(lat, lng);
+        }
+
+        function initXRMap(lat, lng) {
+            const mapContainer = document.getElementById('xrGoogleMap');
+
+            const mapOptions = {
+                center: { lat: lat, lng: lng },
+                zoom: 16,
+                mapTypeId: 'satellite',
+                disableDefaultUI: true,
+                styles: [
+                    {
+                        "elementType": "geometry",
+                        "stylers": [{ "color": "#242f3e" }]
+                    },
+                    {
+                        "elementType": "labels.text.fill",
+                        "stylers": [{ "color": "#746855" }]
+                    },
+                    {
+                        "featureType": "water",
+                        "elementType": "geometry",
+                        "stylers": [{ "color": "#17263c" }]
+                    }
+                ]
+            };
+
+            if (!xrMapInstance) {
+                xrMapInstance = new google.maps.Map(mapContainer, mapOptions);
+
+                // Add marker
+                new google.maps.Marker({
+                    position: { lat: lat, lng: lng },
+                    map: xrMapInstance,
+                    icon: {
+                        path: google.maps.SymbolPath.CIRCLE,
+                        scale: 8,
+                        fillColor: '#00F0FF',
+                        fillOpacity: 1,
+                        strokeColor: '#FFFFFF',
+                        strokeWeight: 2
+                    }
+                });
+            } else {
+                xrMapInstance.setCenter({ lat: lat, lng: lng });
+            }
         }
 
         function showError(error) {
-             document.getElementById('geoStatus').innerHTML = "Error: " + error.message;
+            document.getElementById('geoStatus').innerHTML = "Error: " + error.message;
         }
-        
+
         async function fetchEnvironmentData(lat, lng) {
             try {
                 // Call the new Geospatial Service
                 const response = await fetch('http://localhost:5006/get_geospatial_data', {
                     method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({latitude: lat, longitude: lng})
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ latitude: lat, longitude: lng })
                 });
-                
+
                 const data = await response.json();
-                
-                if(data.success) {
+
+                if (data.success) {
                     const si = data.spatial_intelligence;
                     document.getElementById('elevation').value = si.elevation_meters;
                     document.getElementById('envData').style.display = 'block';
                     document.getElementById('trueNorthVal').innerText = si.true_north_deviation + "°";
                     document.getElementById('sunAngleVal').innerText = si.sun_path.sunrise_azimuth + "°";
                     document.getElementById('terrainVal').innerText = si.terrain_analysis.slope;
-                    
+
                     document.getElementById('geoStatus').innerHTML = "Scan Complete. Ready to Initialize.";
                 }
-                
-            } catch(e) {
+
+            } catch (e) {
                 console.error(e);
                 document.getElementById('geoStatus').innerHTML = "Offline Mode. Using simulated data.";
             }
@@ -436,7 +507,7 @@
 
         function fetchEnvironment() {
             // Manual trigger if needed, or simulation
-            detectLocation(); 
+            detectLocation();
         }
 
         function submitSpaceData() {
@@ -449,11 +520,12 @@
                 projectName: document.getElementById('projectName').value
             };
             localStorage.setItem('vastu_project', JSON.stringify(data));
-            
+
             // Generate standard Vastu Analysis (call old 5000 API)
             // Then redirect
             window.location.href = 'xr_dashboard.html';
         }
     </script>
 </body>
+
 </html>
